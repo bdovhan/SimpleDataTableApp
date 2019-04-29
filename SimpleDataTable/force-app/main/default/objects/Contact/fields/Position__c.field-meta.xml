@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position__c</fullName>
+    <externalId>false</externalId>
+    <label>Position</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1C Engineer</fullName>
+                <default>false</default>
+                <label>1C Engineer</label>
+            </value>
+            <value>
+                <fullName>Accountant</fullName>
+                <default>false</default>
+                <label>Accountant</label>
+            </value>
+            <value>
+                <fullName>Automation specialist</fullName>
+                <default>false</default>
+                <label>Automation specialist</label>
+            </value>
+            <value>
+                <fullName>Automation Test Engineer</fullName>
+                <default>false</default>
+                <label>Automation Test Engineer</label>
+            </value>
+            <value>
+                <fullName>BPO Specialist</fullName>
+                <default>false</default>
+                <label>BPO Specialist</label>
+            </value>
+            <value>
+                <fullName>Branding Coordinator</fullName>
+                <default>false</default>
+                <label>Branding Coordinator</label>
+            </value>
+            <value>
+                <fullName>Business analyst</fullName>
+                <default>false</default>
+                <label>Business analyst</label>
+            </value>
+            <value>
+                <fullName>Chief Accountant</fullName>
+                <default>false</default>
+                <label>Chief Accountant</label>
+            </value>
+            <value>
+                <fullName>CTO</fullName>
+                <default>false</default>
+                <label>CTO</label>
+            </value>
+            <value>
+                <fullName>Data Analyst</fullName>
+                <default>false</default>
+                <label>Data Analyst</label>
+            </value>
+            <value>
+                <fullName>Data Architect</fullName>
+                <default>false</default>
+                <label>Data Architect</label>
+            </value>
+            <value>
+                <fullName>Data Science Engineer</fullName>
+                <default>false</default>
+                <label>Data Science Engineer</label>
+            </value>
+            <value>
+                <fullName>DB/BI Engineer</fullName>
+                <default>false</default>
+                <label>DB/BI Engineer</label>
+            </value>
+            <value>
+                <fullName>Deputy CEO/Chief Financial Officer</fullName>
+                <default>false</default>
+                <label>Deputy CEO/Chief Financial Officer</label>
+            </value>
+            <value>
+                <fullName>Deputy Production Director</fullName>
+                <default>false</default>
+                <label>Deputy Production Director</label>
+            </value>
+            <value>
+                <fullName>Deputy QA Production Director</fullName>
+                <default>false</default>
+                <label>Deputy QA Production Director</label>
+            </value>
+            <value>
+                <fullName>Designer</fullName>
+                <default>false</default>
+                <label>Designer</label>
+            </value>
+            <value>
+                <fullName>Director of European Business Development</fullName>
+                <default>false</default>
+                <label>Director of European Business Development</label>
+            </value>
+            <value>
+                <fullName>Director of Operations</fullName>
+                <default>false</default>
+                <label>Director of Operations</label>
+            </value>
+            <value>
+                <fullName>Engineer Level 1</fullName>
+                <default>false</default>
+                <label>Engineer Level 1</label>
+            </value>
+            <value>
+                <fullName>Engineer Level 2</fullName>
+                <default>false</default>
+                <label>Engineer Level 2</label>
+            </value>
+            <value>
+                <fullName>Financial Analyst</fullName>
+                <default>false</default>
+                <label>Financial Analyst</label>
+            </value>
+            <value>
+                <fullName>Financial Controller</fullName>
+                <default>false</default>
+                <label>Financial Controller</label>
+            </value>
+            <value>
+                <fullName>Head of Account Management</fullName>
+                <default>false</default>
+                <label>Head of Account Management</label>
+            </value>
+            <value>
+                <fullName>Head of Corporate Information Systems</fullName>
+                <default>false</default>
+                <label>Head of Corporate Information Systems</label>
+            </value>
+            <value>
+                <fullName>Head of Design Team</fullName>
+                <default>false</default>
+                <label>Head of Design Team</label>
+            </value>
+            <value>
+                <fullName>Head of Financial Department</fullName>
+                <default>false</default>
+                <label>Head of Financial Department</label>
+            </value>
+            <value>
+                <fullName>Head of Recruitment</fullName>
+                <default>false</default>
+                <label>Head of Recruitment</label>
+            </value>
+            <value>
+                <fullName>HR Administrator</fullName>
+                <default>false</default>
+                <label>HR Administrator</label>
+            </value>
+            <value>
+                <fullName>HR Director</fullName>
+                <default>false</default>
+                <label>HR Director</label>
+            </value>
+            <value>
+                <fullName>HR Manager</fullName>
+                <default>false</default>
+                <label>HR Manager</label>
+            </value>
+            <value>
+                <fullName>IT Director</fullName>
+                <default>false</default>
+                <label>IT Director</label>
+            </value>
+            <value>
+                <fullName>Junior Accountant</fullName>
+                <default>false</default>
+                <label>Junior Accountant</label>
+            </value>
+            <value>
+                <fullName>Junior Automation Engineer</fullName>
+                <default>false</default>
+                <label>Junior Automation Engineer</label>
+            </value>
+            <value>
+                <fullName>Junior Data Science Engineer</fullName>
+                <default>false</default>
+                <label>Junior Data Science Engineer</label>
+            </value>
+            <value>
+                <fullName>Junior DB/BI Engineer</fullName>
+                <default>false</default>
+                <label>Junior DB/BI Engineer</label>
+            </value>
+            <value>
+                <fullName>Junior Engineer</fullName>
+                <default>false</default>
+                <label>Junior Engineer</label>
+            </value>
+            <value>
+                <fullName>Junior Project Coordinator</fullName>
+                <default>false</default>
+                <label>Junior Project Coordinator</label>
+            </value>
+            <value>
+                <fullName>Junior QA Engineer</fullName>
+                <default>false</default>
+                <label>Junior QA Engineer</label>
+            </value>
+            <value>
+                <fullName>Junior Test Engineer</fullName>
+                <default>false</default>
+                <label>Junior Test Engineer</label>
+            </value>
+            <value>
+                <fullName>Managing Director</fullName>
+                <default>false</default>
+                <label>Managing Director</label>
+            </value>
+            <value>
+                <fullName>Marketing Assistant</fullName>
+                <default>false</default>
+                <label>Marketing Assistant</label>
+            </value>
+            <value>
+                <fullName>Marketing Manager</fullName>
+                <default>false</default>
+                <label>Marketing Manager</label>
+            </value>
+            <value>
+                <fullName>Marketing&amp;Business Development Manager</fullName>
+                <default>false</default>
+                <label>Marketing&amp;Business Development Manager</label>
+            </value>
+            <value>
+                <fullName>Menu Manager</fullName>
+                <default>false</default>
+                <label>Menu Manager</label>
+            </value>
+            <value>
+                <fullName>Network Administrator</fullName>
+                <default>false</default>
+                <label>Network Administrator</label>
+            </value>
+            <value>
+                <fullName>Office Manager</fullName>
+                <default>false</default>
+                <label>Office Manager</label>
+            </value>
+            <value>
+                <fullName>Personnel Records Specialist</fullName>
+                <default>false</default>
+                <label>Personnel Records Specialist</label>
+            </value>
+            <value>
+                <fullName>PMO Director</fullName>
+                <default>false</default>
+                <label>PMO Director</label>
+            </value>
+            <value>
+                <fullName>Practice Director</fullName>
+                <default>false</default>
+                <label>Practice Director</label>
+            </value>
+            <value>
+                <fullName>President</fullName>
+                <default>false</default>
+                <label>President</label>
+            </value>
+            <value>
+                <fullName>Project Coordinator</fullName>
+                <default>false</default>
+                <label>Project Coordinator</label>
+            </value>
+            <value>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+                <label>Project Manager</label>
+            </value>
+            <value>
+                <fullName>QA Engineer</fullName>
+                <default>false</default>
+                <label>QA Engineer</label>
+            </value>
+            <value>
+                <fullName>QA Production Director</fullName>
+                <default>false</default>
+                <label>QA Production Director</label>
+            </value>
+            <value>
+                <fullName>QC Engineer</fullName>
+                <default>false</default>
+                <label>QC Engineer</label>
+            </value>
+            <value>
+                <fullName>Recruiter</fullName>
+                <default>false</default>
+                <label>Recruiter</label>
+            </value>
+            <value>
+                <fullName>Regional Administrator</fullName>
+                <default>false</default>
+                <label>Regional Administrator</label>
+            </value>
+            <value>
+                <fullName>Regional Director</fullName>
+                <default>false</default>
+                <label>Regional Director</label>
+            </value>
+            <value>
+                <fullName>Senior DB/BI Engineer</fullName>
+                <default>false</default>
+                <label>Senior DB/BI Engineer</label>
+            </value>
+            <value>
+                <fullName>Senior Engineer</fullName>
+                <default>false</default>
+                <label>Senior Engineer</label>
+            </value>
+            <value>
+                <fullName>Senior Office Manager</fullName>
+                <default>false</default>
+                <label>Senior Office Manager</label>
+            </value>
+            <value>
+                <fullName>Senior Project Coordinator</fullName>
+                <default>false</default>
+                <label>Senior Project Coordinator</label>
+            </value>
+            <value>
+                <fullName>Senior QA Engineer</fullName>
+                <default>false</default>
+                <label>Senior QA Engineer</label>
+            </value>
+            <value>
+                <fullName>Senior Technical Architect</fullName>
+                <default>false</default>
+                <label>Senior Technical Architect</label>
+            </value>
+            <value>
+                <fullName>SharePoint Architect</fullName>
+                <default>false</default>
+                <label>SharePoint Architect</label>
+            </value>
+            <value>
+                <fullName>Solution architect</fullName>
+                <default>false</default>
+                <label>Solution architect</label>
+            </value>
+            <value>
+                <fullName>Sr. DBA</fullName>
+                <default>false</default>
+                <label>Sr. DBA</label>
+            </value>
+            <value>
+                <fullName>Support Specialist</fullName>
+                <default>false</default>
+                <label>Support Specialist</label>
+            </value>
+            <value>
+                <fullName>Technical writer</fullName>
+                <default>false</default>
+                <label>Technical writer</label>
+            </value>
+            <value>
+                <fullName>Test Engineer</fullName>
+                <default>false</default>
+                <label>Test Engineer</label>
+            </value>
+            <value>
+                <fullName>Trainee</fullName>
+                <default>false</default>
+                <label>Trainee</label>
+            </value>
+            <value>
+                <fullName>Vice President of Business Development</fullName>
+                <default>false</default>
+                <label>Vice President of Business Development</label>
+            </value>
+            <value>
+                <fullName>Travel Coordinator</fullName>
+                <default>false</default>
+                <label>Travel Coordinator</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
