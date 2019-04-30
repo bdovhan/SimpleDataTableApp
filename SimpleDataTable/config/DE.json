@@ -1,0 +1,19 @@
+{
+    "orgName": "DE SO",
+    "edition": "Developer",
+    "features": [
+        "API",
+        "AuthorApex",
+        "DebugApex",
+        "MultiCurrency",
+        "PersonAccounts",
+        "ProcessBuilder",
+        "StateAndCountryPicklist",
+        "TerritoryManagement",
+        "Workflow"
+    ],
+    "orgPreferences" : {
+        "disabled": ["S1EncryptedStoragePref2"]
+    }
+    
+}
