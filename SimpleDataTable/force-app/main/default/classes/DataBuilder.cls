@@ -116,7 +116,7 @@ public class DataBuilder extends AbstractDataBuilder {
             if ( fieldName.contains(',') )
                 fieldName = fieldName.subStringAfter(',');
             fieldName = fieldName.subStringBefore('=');
-            System.debug(LoggingLevel.ERROR, '@@@ fieldName: ' + fieldName );
+            System.debug(LoggingLevel.ERROR, '@@@ fieldName: ' + fieldName ); 
             String m = '';
             while ( s.contains('{') ) {
                 m += prefix + 'l.' + label + '.' + fieldName;
@@ -223,11 +223,13 @@ public class DataBuilder extends AbstractDataBuilder {
     public class RecordTypeValueProvider extends SingleValueProcessor{
         Map<String, String> rtNamesToIdsMap = new Map<String, String>();
         public override Object getValue(String sObjectName, String valueDefinition) {
-            String keyDef = valueDefinition.substringAfter('r.');
-            return (String) Helper.either(
-                   rtNamesToIdsMap.get( keyDef ),
-                   Helper.getRecordTypeId( sObjectName, keyDef )
-            );
+            String rtName = valueDefinition.substringAfter('r.');
+            String recordTypeId = rtNamesToIdsMap.get( rtName );
+            if ( recordTypeId == null ) {
+                recordTypeId = SchemaProvider.getRecordTypeId(sObjectName, rtName);
+                rtNamesToIdsMap.put(rtName, recordTypeId);
+            }
+            return recordTypeId;
 
         }
         public Set<Object> getValues(String sObjectName, List<String> recordTypeNames) {
@@ -242,9 +244,9 @@ public class DataBuilder extends AbstractDataBuilder {
 
             }
             if ( !missing.isEmpty() ) {
-                Map<String, String> missingMap = Helper.getRecordTypeIds( sObjectName, missing );
+                Map<String, String> missingMap = SchemaProvider.getRecordTypeIds( sObjectName, missing );
                 rtNamesToIdsMap.putAll( missingMap );
-                toReturn.addAll( Helper.toObjectSet( missingMap.values() ) );
+                toReturn.addAll(new Set<Object>((List<Object>)missingMap.values()));
             }
             return toReturn;
         }
@@ -454,7 +456,7 @@ public class DataBuilder extends AbstractDataBuilder {
                     List<SObject> data = parent.getData( valueDef );
 
                     System.assertNotEquals( null, data, 'Undefined lookup labeled key ' + valueDef );
-                    toReturn = Helper.toObjectSet( Helper.pluckIds(( data ) ) );
+                    toReturn = new Set<Object>((List<Object>)Pluck.ids(( data ) ) );
                 } else {//if ( valueType == 'vs' )
                     Set<Object> values = parent.getValues( valueDef );
                     System.assertNotEquals( null, values,'Undefined values set labeled key ' + valueDef );
@@ -541,7 +543,7 @@ public class DataBuilder extends AbstractDataBuilder {
 
     public class RandomPicklistProcessor extends AbstractRandomValueProcessor{
         public override Object getValue(String sObjectName, String field, String valueDefinition) {
-            return getRandom(Helper.getPicklistValues( sObjectName, field ));
+            return getRandom(SchemaProvider.getPicklistValues( sObjectName, field ));
         }
         public Boolean detectIfApplicable(String valueDefinition){
             return valueDefinition.startsWith('random.picklist');
@@ -574,7 +576,7 @@ public class DataBuilder extends AbstractDataBuilder {
         public List<SObject> process(
                 List<SObject> records, String label, String sObjectName, String field, String valueDefinition
         ){
-            Map<String, Schema.SObjectField> fieldsMap = Helper.getFieldMap( sObjectName );
+            Map<String, Schema.SObjectField> fieldsMap = SchemaProvider.getFieldMap( sObjectName );
             String definition = valueDefinition.substringAfter('builder.');
             List<String> items = definition.split('\\+');
             for ( SObject record: records ) {
@@ -624,14 +626,14 @@ public class DataBuilder extends AbstractDataBuilder {
         KeyValueSplitter fieldValueSplitter, Splitter fieldsSplitter, List<ValueDefinitionProcessor> valueProcessors
     ) {
         nameDefinitionSplitter = (KeyValueSplitter)
-                Helper.either( nameDefSplitter, new SObjectNameValueDefinitionSplitter() );
-        this.preprocessor = (ValueDefinitionPreProcessor) Helper.either(
+                Pluck.either( nameDefSplitter, new SObjectNameValueDefinitionSplitter() );
+        this.preprocessor = (ValueDefinitionPreProcessor) Pluck.either(
                 preprocessor, new ProcessEmbeddedRecordsPreProcessor(this) );
-        this.fieldValueSplitter = (KeyValueSplitter) Helper.either( fieldValueSplitter, new FieldValueSplitter() );
-        this.fieldsSplitter = (Splitter) Helper.either( fieldsSplitter, new FieldsCommaSplitter() );
+        this.fieldValueSplitter = (KeyValueSplitter) Pluck.either( fieldValueSplitter, new FieldValueSplitter() );
+        this.fieldsSplitter = (Splitter) Pluck.either( fieldsSplitter, new FieldsCommaSplitter() );
         RecordTypeValueProvider rtProvider = new RecordTypeValueProvider();
         PrimitiveTypeValueProvider pvProvider = new PrimitiveTypeValueProvider(this);
-        this.valueProcessors = (List<ValueDefinitionProcessor>) Helper.either(
+        this.valueProcessors = (List<ValueDefinitionProcessor>) Pluck.either(
                 valueProcessors, new List<ValueDefinitionProcessor>{
                     new SimpleEmbeddedValueProcessor(this),
                     rtProvider,
@@ -695,7 +697,7 @@ public class DataBuilder extends AbstractDataBuilder {
             }
         }
         if ( doInsert )
-            insert records;
+            Database.insert(records, false);
         putData( label, records );
 
 

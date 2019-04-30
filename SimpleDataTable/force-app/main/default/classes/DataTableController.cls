@@ -77,7 +77,7 @@ public inherited sharing class DataTableController  {
 
     @AuraEnabled
     public static Map<String, Object> getColumnsAndData(
-            String sObjectName, List<String> sObjectFieldsNames, Map<String, Object> overrides,
+            String sObjectName, List<String> sObjectFieldsNames, String whereClause, Map<String, Object> overrides,
             Map<String, Object> valueModifiers
     ) {
         System.debug( sObjectName );
@@ -106,6 +106,9 @@ public inherited sharing class DataTableController  {
                 columns.add( column );
             }
             String query = 'SELECT ' + String.join( sObjectFieldsNames, ', ') + ' FROM ' + sObjectName;
+            if (!String.isBlank(whereClause)) {
+                query += ' WHERE ' + whereClause;
+            }
         System.debug(LoggingLevel.ERROR, '@@@ query: ' + query );
             List<SObject> records = Database.query( query );
     

@@ -1,0 +1,1 @@
+Contact:RecordTypeId=r.Employee,FirstName=rvs.firstNames,LastName=rvs.lastNames,BirthDate=random.date,HireDate__c=random.date,Branch__c=random.picklist,Position__c=random.picklist,Phone=random.ukrainian.cell.phone,Email=builder.FirstName[0]+LastName+@gmail.com

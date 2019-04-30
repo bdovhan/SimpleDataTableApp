@@ -8,6 +8,7 @@
 	        {
 	            'sObjectName': component.get('v.sObjectName'),
 	            'sObjectFieldsNames': component.get('v.sObjectFieldsNames'),
+	            'whereClause': component.get('v.whereClause'),
 	            'overrides': component.get('v.overrides'),
 	            'valueModifiers': component.get('v.valueModifiers')
 	        }
