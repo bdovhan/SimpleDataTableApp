@@ -22,4 +22,12 @@ public class Pluck {
 		}
 		return keys;
 	}
+    
+    public static List<Map<String, Object>> asList(List<SObject> records) {
+        List<Map<String, Object>> models = new List<Map<String, Object>>();
+        for (Object instance : (List<Object>) JSON.deserializeUntyped( JSON.serialize( records ) ) ) {
+            models.add((Map<String, Object>)instance);
+        }
+        return models;
+    }
 }

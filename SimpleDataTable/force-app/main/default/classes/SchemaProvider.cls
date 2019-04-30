@@ -38,12 +38,6 @@ public class SchemaProvider {
      * @return Id : record type id
      */
     public static Id getRecordTypeId(String objName, String rTypeName){
-        System.debug(LoggingLevel.ERROR, '@@@ objName: ' + objName );
-        System.debug(LoggingLevel.ERROR, '@@@ rTypeName: ' + rTypeName );
-        System.debug(LoggingLevel.ERROR, '@@@ getDescribe(objName).getDescribe().getRecordTypeInfosByName(): ' + getDescribe(objName) );
-        System.debug(LoggingLevel.ERROR, '@@@ getDescribe(objName).getDescribe().getRecordTypeInfosByName(): ' + getDescribe(objName).getDescribe().getRecordTypeInfosByName() );
-        System.debug(LoggingLevel.ERROR, '@@@ getDescribe(objName).getDescribe().getRecordTypeInfosByName().get(rTypeName): ' + getDescribe(objName).getDescribe().getRecordTypeInfosByName().get(rTypeName) );
-        
         return getDescribe(objName).getDescribe().getRecordTypeInfosByName().get(rTypeName).getRecordTypeId();
     }
     /**

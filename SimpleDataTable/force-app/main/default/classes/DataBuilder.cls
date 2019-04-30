@@ -108,54 +108,34 @@ public class DataBuilder extends AbstractDataBuilder {
          */
         public String preprocess(String label, String data){
             String s = data;
-            System.debug(LoggingLevel.ERROR, '@@@  processEmbeddedRecords label: ' + label + ' generator ' + s  );
-      
             String prefix = s.subStringBefore('{');
-            System.debug(LoggingLevel.ERROR, '@@@ p: ' + prefix );
             String fieldName = prefix.subStringAfter(':');
             if ( fieldName.contains(',') )
                 fieldName = fieldName.subStringAfter(',');
             fieldName = fieldName.subStringBefore('=');
-            System.debug(LoggingLevel.ERROR, '@@@ fieldName: ' + fieldName ); 
             String m = '';
             while ( s.contains('{') ) {
                 m += prefix + 'l.' + label + '.' + fieldName;
-                System.debug(LoggingLevel.ERROR, '@@@ m: ' + m );
                 String v =  s.subStringAfter('{').subStringBefore('}');
                 s = s.subStringAfter('}');
                 
                 Integer x = v.countMatches('{') - v.countMatches('}');
-                System.debug(LoggingLevel.ERROR, '@@@ x: ' + x );
                 Integer i = 0;
                 while ( x > 0 && !String.isBlank(s) && i < 5 ) {
                     v += '}' + s.subStringBefore('}');
                     s = s.subStringAfter('}');
                     x = v.countMatches('{') - v.countMatches('}');
                     i++;
-                    System.debug(LoggingLevel.ERROR, '@@@ v: ' + v );
-                    System.debug(LoggingLevel.ERROR, '@@@ s: ' + s  );
-                    System.debug(LoggingLevel.ERROR, '@@@ x: ' + x );
                 }
-                System.debug(LoggingLevel.ERROR, '@@@  embed   label: ' + label + '.' + fieldName + ' v ' + v  );
                 
                 parent.build( label + '.' + fieldName, v );
-                System.debug(LoggingLevel.ERROR, '@@@  processEmbeddedRecords continuation label: ' + label +
-                        ' generator ' + s  );
-                
-                System.debug(LoggingLevel.ERROR, '@@@ v: ' + v );
-                System.debug(LoggingLevel.ERROR, '@@@ s: ' + s  );
                 prefix = s.subStringBefore('{');
                      
                 if ( prefix.contains(',') )
                     fieldName = prefix.subStringAfter(',');
                 fieldName = fieldName.subStringBefore('=');
-                System.debug(LoggingLevel.ERROR, '@@@ p: ' + prefix );
-                System.debug(LoggingLevel.ERROR, '@@@ fieldName: ' + fieldName );
             }
-                System.debug(LoggingLevel.ERROR, '@@@ m: ' + m );
-                System.debug(LoggingLevel.ERROR, '@@@ s: ' + s  );        
             m += s;
-            System.debug(LoggingLevel.ERROR, '@@@ m: ' + m );
             return m;
         }
     }
@@ -332,17 +312,13 @@ public class DataBuilder extends AbstractDataBuilder {
             for ( SObject r: records ) {
                 Boolean match = false;
                 for ( Object key: dep.masterValueToDependentMap.keySet() ) {
-                    System.debug(LoggingLevel.ERROR, '@@@ key: ' + key + '  dep.masterField: ' + dep.masterField +
-                            ' value: ' +  r.get( dep.masterField ) );
                     if ( r.get( dep.masterField ) == key ) {
                         r.put( field, dep.masterValueToDependentMap.get( key ) );
                         match = true;
                         break;
                     }
                 }
-                System.debug(LoggingLevel.ERROR, '@@@ match: ' + match );
                 if ( !match && dep.elseValue != null ) {
-                    System.debug(LoggingLevel.ERROR, '@@@ field: ' + field + 'dep.elseValue: ' + dep.elseValue);
                     r.put( field, dep.elseValue );
                 }
             }
@@ -386,9 +362,6 @@ public class DataBuilder extends AbstractDataBuilder {
             }
 
             List<String> endItems = ending.split('>');
-            System.debug(LoggingLevel.ERROR, '@@@  endItems.size(): ' +  endItems.size() );
-            System.debug(LoggingLevel.ERROR, '@@@  endItems.size() % 2: ' +
-                    Math.mod( endItems.size(), 2 ) );
             String elseValueDef = Math.mod( endItems.size(), 2 ) == 0 ?
                                   '' : endItems[  endItems.size() - 1 ];
             Map<String, String> definitionMap = new Map<String, String>();
@@ -451,7 +424,6 @@ public class DataBuilder extends AbstractDataBuilder {
             if ( items.size() == 1 && ( items[0].startsWith( 'vs.' ) || items[0].startsWith( 'l.' ))) {
                 String valueType = items[0].subStringBefore('.');
                 String valueDef = items[0].subStringAfter('.');
-                System.debug(LoggingLevel.ERROR, '@@@ valueDef: ' + valueDef );
                 if ( valueType == 'l' ) {
                     List<SObject> data = parent.getData( valueDef );
 
@@ -582,26 +554,15 @@ public class DataBuilder extends AbstractDataBuilder {
             for ( SObject record: records ) {
                 String concatenatedValue = '';
                 for (String item: items) {
-                    System.debug(LoggingLevel.ERROR, '@@@ item: ' + item );
                     String hypotheticalFieldName = item.substringBefore('[');
-                    System.debug(LoggingLevel.ERROR, '@@@ hypotheticalFieldName: ' + hypotheticalFieldName );
-                    System.debug(LoggingLevel.ERROR, '@@@ fieldsMap.containsKey(hypotheticalFieldName): ' +
-                            fieldsMap.containsKey(hypotheticalFieldName) );
-                    System.debug(LoggingLevel.ERROR, '@@@ fieldsMap: ' +
-                            String.join(new List<String>(fieldsMap.keySet()), ',') );
-                    System.debug(LoggingLevel.ERROR, '@@@ (hypotheticalFieldName.lower()) in fieldsMap: ' +
-                            fieldsMap.containsKey(hypotheticalFieldName.toLowerCase()) );
                     if ( fieldsMap.containsKey(hypotheticalFieldName) ) {
                         String value = String.valueOf( record.get( hypotheticalFieldName ) );
-                        System.debug(LoggingLevel.ERROR, '@@@ value: ' + value );
                         if (item.endsWith(']')) {
                             Integer index = Integer.valueOf( item.substringBetween('[', ']') );
-                            System.debug(LoggingLevel.ERROR, '@@@ index: ' + index );
                             item = item.substringBefore('[');
                             System.assert(fieldsMap.containsKey(item), 'Field ' + item +
                                     ' was not found in object ' + sObjectName );
                             value = value.substring(index, index+1);
-                            System.debug(LoggingLevel.ERROR, '@@@ value: ' + value );
                         }
                         concatenatedValue += value;
                     } else {
@@ -715,10 +676,6 @@ public class DataBuilder extends AbstractDataBuilder {
             Object value = valueDef;
 
             for ( ValueDefinitionProcessor processor: valueProcessors ) {
-                System.debug(LoggingLevel.ERROR, '@@@ processor: ' + processor );
-                System.debug(LoggingLevel.ERROR, '@@@ valueDef: ' + valueDef );
-                System.debug(LoggingLevel.ERROR, '@@@ processor.detectIfApplicable( valueDef): ' +
-                        processor.detectIfApplicable( valueDef) );
                 if ( processor.detectIfApplicable( valueDef) ) {
                     records = processor.process(records, label, sObjectName, field, valueDef );
                     break;

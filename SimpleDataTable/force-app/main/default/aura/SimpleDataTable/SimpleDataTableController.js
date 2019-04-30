@@ -1,6 +1,5 @@
 ({
 	init : function(component, event, helper) {
-        debugger;
 	    helper.callActionAsPromise(
 	        component,
 	        helper,
