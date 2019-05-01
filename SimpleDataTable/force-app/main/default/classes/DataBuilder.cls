@@ -20,6 +20,29 @@
  *   You can either use this default implementation or extend it and use some customization
  */
 public class DataBuilder extends AbstractDataBuilder {
+    /**
+     * if I use this method  only for debug purposes then I should delete it
+     * or move it to utils if I use it elsewhere
+     */
+    public static string getType(Object o) {
+        if(o==null) return '';              // we can't say much about null with our current techniques
+        if(o instanceof SObject)            return ((SObject)o).getSObjectType().getDescribe().getName()+'';
+        if(o instanceof Boolean)            return 'Boolean';
+        if(o instanceof Id)                 return 'Id';
+        if(o instanceof String)             return 'String';
+        if(o instanceof Blob)               return 'Blob';
+        if(o instanceof Date)               return 'Date';
+        if(o instanceof Datetime)           return 'Datetime';
+        if(o instanceof Time)               return 'Time';
+        if(o instanceof String)             return 'String';
+        if(o instanceof Integer)            return 'Integer';
+        if(o instanceof Long)               return 'Long';
+        if(o instanceof Decimal)            return 'Decimal';  // we can't distinguish between decimal and double
+        if(o instanceof Double)             return 'Double';   // we can't distinguish between decimal and double
+        if(o instanceof List<object>)       return 'List';
+        return 'Object';                    // actually we can't detect maps and sets and maps
+    }
+    
     public interface KeyValueSplitter{
         void setData(String data);
         String getKey();
@@ -185,6 +208,20 @@ public class DataBuilder extends AbstractDataBuilder {
     public abstract class SingleValueProcessor implements ValueDefinitionProcessor{
         abstract  Object getValue(String sObjectName, String valueDefinition);
         public List<SObject> setFieldsValue( List<SObject> records, String fieldsDefinition, Object value ) {
+            if ( records.size() > 0 ) {
+                String valueType = getType(value);
+                Map<String, Schema.SObjectField> fieldsMap = records[0].getSObjectType().getDescribe().fields.getMap();
+                for ( String field: fieldsDefinition.split('\\|') ) {
+                    String fieldType = String.valueOf( fieldsMap.get(field).getDescribe().getSOAPType() );
+                    System.debug(LoggingLevel.ERROR, '@@@ valueType: ' + valueType );
+                    System.debug(LoggingLevel.ERROR, '@@@ fieldType: ' + fieldType );
+                    if ( valueType != fieldType ) {
+                        throw new DataBuilderException('Please check if you have registered value processor for value definition ' + value + ', because the type of value ' + valueType + ' and type ' + fieldType + ' of field ' + field + ' do not match. If you do not register your Value Processor in your value processors list, the process will fall back to Idempotent operator and copy the field definition to field value and will try to set String value to non-string field type');
+                    }
+                }
+                
+            }
+                
             for ( SObject r: records ) {
                 for ( String field: fieldsDefinition.split('\\|') ) {
                     r.put( field, value );
@@ -482,7 +519,7 @@ public class DataBuilder extends AbstractDataBuilder {
             return ( Math.random() * max ).longValue();
         }
         public List<SObject> process(
-                List<SObject> records, String label, String sObjectName, String field, String valueDefinition
+            List<SObject> records, String label, String sObjectName, String field, String valueDefinition
         ){
             for ( SObject r: records ) {
                 r.put( field, getValue(sObjectName, field, valueDefinition) );
@@ -510,6 +547,60 @@ public class DataBuilder extends AbstractDataBuilder {
         }
         public Boolean detectIfApplicable(String valueDefinition){
             return valueDefinition.startsWith('random.date');
+        }
+    }
+    
+    public class RandomDateInRangeProcessor extends AbstractRandomValueProcessor{
+        private DateTime getEndDate(Integer value, String descriptor) {
+            DateTime now = DateTime.now();
+            DateTime toReturn = now;
+            switch on descriptor.toLowerCase() {
+                when 'y' {
+                    toReturn = now.addYears(value);
+                }
+                when 'm' {
+                    toReturn = now.addMonths(value);
+                }
+                when 'd' {
+                    toReturn = now.addDays(value);
+                }
+                when 'h' {
+                    toReturn = now.addHours(value);
+                }
+                when 'i' {
+                    toReturn = now.addMinutes(value);
+                }
+                when 's' {
+                    toReturn = now.addSeconds(value);
+                }
+            }
+            return toReturn;
+        }
+        public override Object getValue(String sObjectName, String field, String valueDefinition) {
+            List<String> valueItems = valueDefinition.split('\\.');
+            if ( valueItems.size() < 6 ) {
+                throw new DataBuilderException('RandomDateInRangeProcessor requires at least 6 items like random.inrange.date.y.-7.0 or random.inrange.date.y.-18.- but received ' + valueDefinition + ' with size ' + valueItems.size() );
+            }
+            String lastItem = valueItems[5];
+            if ( lastItem == '-' ) {
+                DateTime endDate = getEndDate(Integer.valueOf(valueItems[4]), valueItems[3]);
+                return DateTime.newInstance(getRandomLong(endDate.getTime()) ).date();
+            } else {
+                Integer value1 = Integer.valueOf(valueItems[4]);
+                Integer value2 = Integer.valueOf(valueItems[5]);
+                Integer min = Math.min(value1, value2);
+                Integer max = Math.max(value1, value2);
+                DateTime minDate = getEndDate(min, valueItems[3]);
+                DateTime maxDate = getEndDate(max, valueItems[3]);
+                return DateTime.newInstance(minDate.getTime() + getRandomLong(maxDate.getTime() - minDate.getTime()) ).date();
+                
+            }
+            //return new Dependency( valueItems[1], parent.getData( valueItems[2] ), valueItems[3] );
+            
+            //return DateTime.newInstance(getRandomLong(DateTime.now().getTime()) ).date();
+        }
+        public Boolean detectIfApplicable(String valueDefinition){
+            return valueDefinition.startsWith('random.inrange.date');
         }
     }
 
@@ -603,6 +694,7 @@ public class DataBuilder extends AbstractDataBuilder {
                     new DataDependencyValueProcessor(rtProvider, pvProvider),
                     new MultiplicationProcessor(this, rtProvider, pvProvider),
                     new RandomValueDefinitionProcessor(this),
+                    new RandomDateInRangeProcessor(),
                     new RandomDateProcessor(),
                     new RandomPicklistProcessor(),
                     new RandomUkrainianPhoneProcessor(),
@@ -657,7 +749,9 @@ public class DataBuilder extends AbstractDataBuilder {
                 records = processGeneratorDefinitionString( records, label, sObjectName, definition );
             }
         }
+        System.debug(LoggingLevel.ERROR, '@@@ records.size(): ' + records.size() );
         if ( doInsert )
+            //insert records;
             Database.insert(records, false);
         putData( label, records );
 
@@ -684,4 +778,6 @@ public class DataBuilder extends AbstractDataBuilder {
         }
         return records;
     }
+    
+    public class DataBuilderException extends Exception{}
 }
