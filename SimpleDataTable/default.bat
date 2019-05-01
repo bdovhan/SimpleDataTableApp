@@ -1,1 +1,1 @@
-setupScratchOrg.bat DESU
+setupScratchOrg.bat DESO

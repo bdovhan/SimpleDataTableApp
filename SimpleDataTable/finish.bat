@@ -1,1 +1,1 @@
-kickScratchOrg.bat DESU
+kickScratchOrg.bat DESO

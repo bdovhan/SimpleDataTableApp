@@ -1,3 +1,8 @@
+This project was imported\forked from Apex Data Generation library.
+https://github.com/bdovhan/ApexDataGeneration or https://github.com/patlatus/ApexDataGeneration
+This readme file contains description from the ApexDataGeneration library below.
+To find and read about this specific application, go to /SimpleDataTable/README.md
+
 # Apex Data Generation
 Salesforce (SFDC) Data Generation Framework written on Apex
 Initially this was used to be designed as test utility framework for data generation for tests.
