@@ -23,7 +23,9 @@ public class SchemaProvider {
 
         // get the field result, return if not found or if field isn't a picklist
         dfResult = soField.getDescribe();
-        if (dfResult == null || (dfResult.getType() != DisplayType.picklist && dfResult.getType() != DisplayType.multipicklist)) return values;
+        Boolean isPicklist = dfResult != null && new Set<DisplayType>{DisplayType.picklist,DisplayType.multipicklist}
+            .contains(dfResult.getType());
+        if (dfResult == null || !isPicklist) return values;
 
         // build the SelectOption list from the values and names of the field's picklist entries
         for (Schema.PicklistEntry p : dfResult.getPicklistValues()) {

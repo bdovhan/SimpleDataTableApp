@@ -43,19 +43,26 @@ public inherited sharing virtual class DataTableController extends SimpleDataTab
         return toReturn;
     }
     
-    protected virtual Map<String, Map<String, Object>> getColumnsMap(String sObjectName, List<String> sObjectFieldsNames, Map<String, Object> overrides) {
+    protected virtual Map<String, Map<String, Object>> getColumnsMap(
+        String sObjectName, List<String> sObjectFieldsNames, Map<String, Object> overrides
+    ) {
         Map<String, Map<String, Object>> columnsMap = getColumnsMap(sObjectName, sObjectFieldsNames);
         for ( String fieldName: sObjectFieldsNames ) {
             Map<String, Object> column = columnsMap.get( fieldName );
             if ( overrides != null && overrides.containsKey( fieldName ) ) {
-                //Prevent error [Invalid conversion from runtime type Map<ANY,ANY> to Map<String,ANY>] by serializing and deserializing
-                column.putAll( (Map<String, Object>) JSON.deserializeUntyped( JSON.serialize( overrides.get( fieldName ) ) ) );
+                //Prevent error [Invalid conversion from runtime type Map<ANY,ANY> to Map<String,ANY>] by serializing
+                //and deserializing
+                column.putAll(
+                    (Map<String, Object>) JSON.deserializeUntyped( JSON.serialize( overrides.get( fieldName ) ) )
+                );
             }
             columnsMap.put( fieldName, column );
         }
         return columnsMap;
     }
-    protected virtual List<Map<String, Object>> query(String sObjectName, List<String> sObjectFieldsNames, String whereClause, Map<String, Object> valueModifiers) {
+    protected virtual List<Map<String, Object>> query(
+        String sObjectName, List<String> sObjectFieldsNames, String whereClause, Map<String, Object> valueModifiers
+    ) {
         List<SObject> records = query(sObjectName, sObjectFieldsNames, whereClause);
         return valueModifiers != null ? modifyValues( records, valueModifiers ) : Pluck.asList(records);
     }
@@ -75,7 +82,9 @@ public inherited sharing virtual class DataTableController extends SimpleDataTab
         Map<String, Object> valueModifiers
     ) {
         try{
-            return new DataTableController().getColumnsData(sObjectName, sObjectFieldsNames, whereClause,overrides,valueModifiers);
+            return new DataTableController().getColumnsData(
+                sObjectName, sObjectFieldsNames, whereClause,overrides,valueModifiers
+            );
         } catch(Exception e) {
             throw AuraUtils.buildAuraHandledException(e);
         }

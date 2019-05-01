@@ -1,6 +1,6 @@
 ({
     init: function (cmp, event, helper) {
-    	cmp.set('v.mycolumns', [
+        cmp.set('v.mycolumns', [
             {label: 'Opportunity name', fieldName: 'opportunityName', type: 'text'},
             {label: 'Confidence', fieldName: 'confidence', type: 'percent', cellAttributes:
              { iconName: { fieldName: 'trendIcon' }, iconPosition: 'right' }},

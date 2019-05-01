@@ -1,19 +1,19 @@
 ({
-	init : function(component, event, helper) {
-	    helper.callActionAsPromise(
-	        component,
-	        helper,
-	        'c.getColumnsAndData',
-	        {
-	            'sObjectName': component.get('v.sObjectName'),
-	            'sObjectFieldsNames': component.get('v.sObjectFieldsNames'),
-	            'whereClause': component.get('v.whereClause')
-	        }
-	    ).then(function(r) {
-	        component.set('v.columns', r.r.columns);
-	        component.set('v.data', r.r.data);
-	    })
-	},
+    init : function(component, event, helper) {
+        helper.callActionAsPromise(
+            component,
+            helper,
+            'c.getColumnsAndData',
+            {
+                'sObjectName': component.get('v.sObjectName'),
+                'sObjectFieldsNames': component.get('v.sObjectFieldsNames'),
+                'whereClause': component.get('v.whereClause')
+            }
+        ).then(function(r) {
+            component.set('v.columns', r.r.columns);
+            component.set('v.data', r.r.data);
+        })
+    },
     
     // Client-side controller called by the onsort event handler
     updateColumnSorting: function (cmp, event, helper) {

@@ -1,5 +1,5 @@
 ({
-	callActionAsPromise : function(component, helper, actionName, params) {
+    callActionAsPromise : function(component, helper, actionName, params) {
         return new Promise($A.getCallback(function(resolve, reject) {
             let action = component.get(actionName);
             action.setParams(params);

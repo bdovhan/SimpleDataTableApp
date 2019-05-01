@@ -198,9 +198,9 @@ public class DataBuilder extends AbstractDataBuilder {
         ){
             // shouldn't be here doInsert parameter true? Why is it false?
             return setRelationshipValue(
-                    records, field, parent.build(
-                                    label + '.' + field, valueDefinition, 1, false
-                    )[0]
+                records, field, parent.build(
+                    label + '.' + field, valueDefinition, 1, false
+                )[0]
             );
         }
     }
@@ -216,7 +216,14 @@ public class DataBuilder extends AbstractDataBuilder {
                     System.debug(LoggingLevel.ERROR, '@@@ valueType: ' + valueType );
                     System.debug(LoggingLevel.ERROR, '@@@ fieldType: ' + fieldType );
                     if ( valueType != fieldType ) {
-                        throw new DataBuilderException('Please check if you have registered value processor for value definition ' + value + ', because the type of value ' + valueType + ' and type ' + fieldType + ' of field ' + field + ' do not match. If you do not register your Value Processor in your value processors list, the process will fall back to Idempotent operator and copy the field definition to field value and will try to set String value to non-string field type');
+                        throw new DataBuilderException(
+                            'Please check if you have registered value processor for value definition ' + value
+                            + ', because the type of value ' + valueType + ' and type ' + fieldType + ' of field '
+                            + field + ' do not match. If you do not register your Value Processor in your value '
+                            + 'processors list, the process will fall back to Idempotent operator and copy the '
+                            + 'field definition to field value and will try to set String value to non-string field '
+                            + ' type'
+                        );
                     }
                 }
                 
@@ -231,7 +238,7 @@ public class DataBuilder extends AbstractDataBuilder {
         }
 
         public List<SObject> process(
-                List<SObject> records, String label, String sObjectName, String field, String valueDefinition
+            List<SObject> records, String label, String sObjectName, String field, String valueDefinition
         ){
             return setFieldsValue( records, field, getValue( sObjectName, valueDefinition ) );
         }
@@ -592,12 +599,10 @@ public class DataBuilder extends AbstractDataBuilder {
                 Integer max = Math.max(value1, value2);
                 DateTime minDate = getEndDate(min, valueItems[3]);
                 DateTime maxDate = getEndDate(max, valueItems[3]);
-                return DateTime.newInstance(minDate.getTime() + getRandomLong(maxDate.getTime() - minDate.getTime()) ).date();
-                
+                return DateTime.newInstance(
+                    minDate.getTime() + getRandomLong(maxDate.getTime() - minDate.getTime())
+                ).date();
             }
-            //return new Dependency( valueItems[1], parent.getData( valueItems[2] ), valueItems[3] );
-            
-            //return DateTime.newInstance(getRandomLong(DateTime.now().getTime()) ).date();
         }
         public Boolean detectIfApplicable(String valueDefinition){
             return valueDefinition.startsWith('random.inrange.date');
@@ -637,7 +642,7 @@ public class DataBuilder extends AbstractDataBuilder {
         }
 
         public List<SObject> process(
-                List<SObject> records, String label, String sObjectName, String field, String valueDefinition
+            List<SObject> records, String label, String sObjectName, String field, String valueDefinition
         ){
             Map<String, Schema.SObjectField> fieldsMap = SchemaProvider.getFieldMap( sObjectName );
             String definition = valueDefinition.substringAfter('builder.');
@@ -652,7 +657,7 @@ public class DataBuilder extends AbstractDataBuilder {
                             Integer index = Integer.valueOf( item.substringBetween('[', ']') );
                             item = item.substringBefore('[');
                             System.assert(fieldsMap.containsKey(item), 'Field ' + item +
-                                    ' was not found in object ' + sObjectName );
+                                ' was not found in object ' + sObjectName );
                             value = value.substring(index, index+1);
                         }
                         concatenatedValue += value;
@@ -678,29 +683,29 @@ public class DataBuilder extends AbstractDataBuilder {
         KeyValueSplitter fieldValueSplitter, Splitter fieldsSplitter, List<ValueDefinitionProcessor> valueProcessors
     ) {
         nameDefinitionSplitter = (KeyValueSplitter)
-                Pluck.either( nameDefSplitter, new SObjectNameValueDefinitionSplitter() );
+            Pluck.either( nameDefSplitter, new SObjectNameValueDefinitionSplitter() );
         this.preprocessor = (ValueDefinitionPreProcessor) Pluck.either(
-                preprocessor, new ProcessEmbeddedRecordsPreProcessor(this) );
+            preprocessor, new ProcessEmbeddedRecordsPreProcessor(this) );
         this.fieldValueSplitter = (KeyValueSplitter) Pluck.either( fieldValueSplitter, new FieldValueSplitter() );
         this.fieldsSplitter = (Splitter) Pluck.either( fieldsSplitter, new FieldsCommaSplitter() );
         RecordTypeValueProvider rtProvider = new RecordTypeValueProvider();
         PrimitiveTypeValueProvider pvProvider = new PrimitiveTypeValueProvider(this);
         this.valueProcessors = (List<ValueDefinitionProcessor>) Pluck.either(
-                valueProcessors, new List<ValueDefinitionProcessor>{
-                    new SimpleEmbeddedValueProcessor(this),
-                    rtProvider,
-                    pvProvider,
-                    new SimpleDependencyValueProcessor(this),
-                    new DataDependencyValueProcessor(rtProvider, pvProvider),
-                    new MultiplicationProcessor(this, rtProvider, pvProvider),
-                    new RandomValueDefinitionProcessor(this),
-                    new RandomDateInRangeProcessor(),
-                    new RandomDateProcessor(),
-                    new RandomPicklistProcessor(),
-                    new RandomUkrainianPhoneProcessor(),
-                    new BuilderValueProcessor(),
-                    new IdempotentValueDefinitionProcessor()
-                }
+            valueProcessors, new List<ValueDefinitionProcessor>{
+                new SimpleEmbeddedValueProcessor(this),
+                rtProvider,
+                pvProvider,
+                new SimpleDependencyValueProcessor(this),
+                new DataDependencyValueProcessor(rtProvider, pvProvider),
+                new MultiplicationProcessor(this, rtProvider, pvProvider),
+                new RandomValueDefinitionProcessor(this),
+                new RandomDateInRangeProcessor(),
+                new RandomDateProcessor(),
+                new RandomPicklistProcessor(),
+                new RandomUkrainianPhoneProcessor(),
+                new BuilderValueProcessor(),
+                new IdempotentValueDefinitionProcessor()
+            }
         );
     }
     Map<String, List<SObject>> labeledDataMap = new Map<String, List<SObject>>();
@@ -741,7 +746,7 @@ public class DataBuilder extends AbstractDataBuilder {
             // Do not remember why did I have to use this if condition
             if ( definition.contains('},{') ) {
                 for ( String generatorItem: definition.substringAfter('[{').substringBefore('}]')
-                        .split('\\},\\{')
+                    .split('\\},\\{')
                 ) {
                     records = processGeneratorDefinitionString( records, label, sObjectName, generatorItem );
                 }
@@ -760,7 +765,7 @@ public class DataBuilder extends AbstractDataBuilder {
     }
 
     List<SObject> processGeneratorDefinitionString(
-            List<SObject> records, String label, String sObjectName, String definition
+        List<SObject> records, String label, String sObjectName, String definition
     ) {
         List<String> pairs = fieldsSplitter.split(definition);
         for ( String pair: pairs ) {
