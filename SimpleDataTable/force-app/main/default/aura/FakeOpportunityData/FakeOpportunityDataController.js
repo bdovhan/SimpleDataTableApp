@@ -3,7 +3,8 @@
         cmp.set('v.mycolumns', [
             {label: 'Opportunity name', fieldName: 'opportunityName', type: 'text'},
             {label: 'Confidence', fieldName: 'confidence', type: 'percent', cellAttributes:
-             { iconName: { fieldName: 'trendIcon' }, iconPosition: 'right' }},
+                { iconName: { fieldName: 'trendIcon' }, iconPosition: 'right' }
+            },
             {label: 'Amount', fieldName: 'amount', type: 'currency', typeAttributes: { currencyCode: 'EUR'}},
             {label: 'Contact Email', fieldName: 'contact', type: 'email'},
             {label: 'Contact Phone', fieldName: 'phone', type: 'phone'}

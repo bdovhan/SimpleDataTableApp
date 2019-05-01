@@ -5,5 +5,5 @@
                  overrides="{'FirstName':{'type':'url','typeAttributes':{'label':{ 'fieldName': 'Origin.FirstName' },'tooltip':{ 'fieldName': 'Origin.FirstName' },'title':{ 'fieldName': 'Origin.FirstName' }}}}"
                  valueModifiers="{'Origin.FirstName':'{FirstName}', 'FirstName':'/{Id}'}"
     />
-    <c:DataTableTestComp />
+    <c:FakeOpportunityData/>
 </aura:application>

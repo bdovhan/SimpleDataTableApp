@@ -1,9 +1,13 @@
 <aura:component extensible="true" controller="SimpleDataTableController">
-    <aura:attribute name="sObjectName" type="String" description="Input attribute to define which sObject to use" required="true"/>
-    <aura:attribute name="sObjectFieldsNames" type="List" description="Input attribute to define which sObject fields to use" required="true"/>
-    <aura:attribute name="whereClause" type="String" description="Input attribute to define where clause" required="false"/>
+    <aura:attribute name="sObjectName" type="String" description="Input attribute to define which sObject to use"
+                    required="true"/>
+    <aura:attribute name="sObjectFieldsNames" type="List"
+                    description="Input attribute to define which sObject fields to use" required="true"/>
+    <aura:attribute name="whereClause" type="String" description="Input attribute to define where clause"
+                    required="false"/>
     <aura:attribute name="data" type="Object"/>
     <aura:attribute name="columns" type="List"/>
     <aura:handler name="init" value="{! this }" action="{! c.init }"/>
-    <lightning:datatable data="{! v.data }" columns="{! v.columns }" keyField="id" hideCheckboxColumn="true" onsort="{!c.updateColumnSorting}"/>                
+    <lightning:datatable data="{! v.data }" columns="{! v.columns }" keyField="id" hideCheckboxColumn="true"
+                         onsort="{!c.updateColumnSorting}"/>
 </aura:component>

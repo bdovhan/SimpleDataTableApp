@@ -8,7 +8,9 @@
                     resolve({'c':component, 'h':helper, 'r':actionResult.getReturnValue()});
                 } else {
                     let errors = actionResult.getError();
-                    reject(new Error(errors && Array.isArray(errors) && errors.length === 1 ? errors[0].message : JSON.stringify(errors)));
+                    reject(new Error(errors && Array.isArray(errors) && errors.length === 1
+                        ? errors[0].message : JSON.stringify(errors))
+                    );
                 }
             });
             $A.enqueueAction(action);
