@@ -1,0 +1,1 @@
+setupScratchOrg.bat DESO DESU

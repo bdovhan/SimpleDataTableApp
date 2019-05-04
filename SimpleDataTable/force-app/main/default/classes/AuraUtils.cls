@@ -7,6 +7,6 @@ public class AuraUtils {
     public static AuraHandledException buildAuraHandledException(Exception ex){
         AuraHandledException e = new AuraHandledException(ex.getMessage());
         e.setMessage(ex.getMessage());
-        return e;            
+        return e;
     }
 }
