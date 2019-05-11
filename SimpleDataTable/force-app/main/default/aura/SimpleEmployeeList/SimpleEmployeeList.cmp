@@ -1,6 +1,15 @@
 <aura:component >
-    <c:SimpleDataTable sObjectName="Contact"
+    <!-- <c:SimpleDataTable sObjectName="Contact"
                  sObjectFieldsNames="FirstName,LastName,BirthDate,HireDate__c,Branch__c,Position__c,Email,Phone"
                  whereClause="RecordType.Name = 'Employee'"
     />
+
+                  
+-->
+ 
+
+    <c:simpleDataTableWiredProperty sObjectName="Contact"
+    sObjectFieldsNames="FirstName,LastName,BirthDate,HireDate__c,Branch__c,Position__c,Email,Phone"
+    whereClause="RecordType.Name = 'Employee'" />
+    
 </aura:component>
