@@ -1,1 +1,0 @@
-setupScratchOrg.bat DESO
