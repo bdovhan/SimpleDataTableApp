@@ -1,0 +1,1 @@
+sfdx force:apex:execute -f apex/defaultSetup.apex -u DE
