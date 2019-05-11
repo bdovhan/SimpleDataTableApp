@@ -1,0 +1,14 @@
+<template>
+    <template if:true={error}>
+        <template if:true={error.body}>
+            {error.body.message}
+        </template>
+    </template>
+    
+    Simple Table LWC 
+
+    <lightning-datatable data={data} columns={columns} key-field="id" 
+    hide-checkbox-column onsort={updateColumnSorting}>
+    </lightning-datatable>
+
+</template>

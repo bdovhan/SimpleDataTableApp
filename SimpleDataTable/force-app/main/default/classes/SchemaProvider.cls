@@ -3,7 +3,12 @@ public class SchemaProvider {
     private static SObjectType getDescribe(String token) {
         SObjectType describe = globalDescribe.get(token);
         if ( describe == null ) {
+            if ( Type.forName(token) == null ) {
+                throw new CustomException(token + ' is not valid SObject name');
+            }
             describe = ((SObject) Type.forName(token).newInstance()).getSObjectType();
+            
+
             globalDescribe.put(token, describe);
         }
         return describe;
@@ -59,4 +64,6 @@ public class SchemaProvider {
     public static Map<String, Schema.SObjectField> getFieldMap(String objName) {
         return getDescribe(objName).getDescribe().fields.getMap();
     }
+
+    public class CustomException extends Exception {}
 }
