@@ -1,0 +1,1 @@
+./setupScratchOrg.sh DESO DESU

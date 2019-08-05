@@ -1,0 +1,1 @@
+kickScratchOrg.bat DESO

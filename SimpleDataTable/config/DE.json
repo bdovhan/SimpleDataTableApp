@@ -12,8 +12,10 @@
         "TerritoryManagement",
         "Workflow"
     ],
-    "orgPreferences" : {
-        "disabled": ["S1EncryptedStoragePref2"]
+    "settings": {
+        "orgPreferenceSettings": {
+            "s1EncryptedStoragePref2": false
+        }
     }
     
 }
