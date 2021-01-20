@@ -1,0 +1,1 @@
+sfdx force:limits:api:display -u $1 | awk '$1 ~ /ScratchOrg/ { print }'     
