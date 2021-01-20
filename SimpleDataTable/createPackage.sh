@@ -1,1 +1,1 @@
-sfdx force:package:create --name "Test App" --packagetype Managed --path "force-app" --errornotificationusername $1 -v $1
+sfdx force:package:create --name "Test App: $2" --packagetype Managed --path "$3" -v $1
