@@ -1,7 +1,7 @@
 # Preface
-On the 12th of April 2019 I have published [an article about migration from Aura to Lightning Web Components](https://corevalue.net/migrate-aura-lightning-web-components).
+On the 12th of April 2019 I have published [an article about migration from Aura to Lightning Web Components](https://corevalue.net/migrate-aura-lightning-web-components). This article was migrated [to the updated ex-employer blog here](https://www.avenga.com/magazine/migrate-aura-lightning-web-components-increase-performance/)
 Shortly after that I was offered to prepare a workshop to demonstrate how this can be done in action. 
-I decided to use an Aura component described in [my another article published on the 18th of June 2018 which was used to build a simple employee list application using standard lightning:datatable component from Lightning Aura Framework](https://corevalue.net/using-lightning-promises/).
+I decided to use an Aura component described in [my another article published on the 18th of June 2018 which was used to build a simple employee list application using standard lightning:datatable component from Lightning Aura Framework](https://corevalue.net/using-lightning-promises/) which was republished at Sep 01, 2020 on [the updated ex-employer blog here](https://www.avenga.com/magazine/using-lightning-promises/).
 Since this component is also available for use in Lightning Web Components Framework, I decided to prepare a workshop where the main task was to clone that application using Aura component and replace SimpleEmployeeList aura component with SimpleEmployees Lightning Web Component counterpart.
 Also I offered additional task to clone another advanced application and replace reference to another DataTable Aura component with Lightning Web Component counterpart. 
 This is the guide explaining how this migration can be performed. I plan to add video screenshots of important steps.
