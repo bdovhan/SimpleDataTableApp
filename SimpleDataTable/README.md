@@ -52,18 +52,23 @@ If the command response has blank space under Value column, this means that you 
 You can enabled DevHub feature in your trial production or Developer Edition org without namespace registered. Also Partner Developer Edition org may not be used.
 
 Go to Setup and search for `Dev Hub`.
+
 ![Searchning `Dev Hub`](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/DevHub.png?raw=true)
+
 If you can't see it or can't find it, your org might not support Dev Hub. You need a different org or register a brand new Developer Edition org or Trailhead org.
 
 [You can signup for 30-day DX Trial Org here](https://developer.salesforce.com/promotions/orgs/dx-signup)
+
 [Alternatively just sign up for usual Developer Edition Org here](https://developer.salesforce.com/signup)
 
-Once you have figured this out, click on the Dev Hub link and switch the Enabled toggle 
+Once you have figured this out, click on the Dev Hub link and switch on the Enable Dev Hub toggle and Enable Unlocked Packages and Second-Generation Managed Packages
 
-![Switching enable Dev Hub toggle input](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/DevHub.gif?raw=true)
+![Switching enable Dev Hub toggle input - update required](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/DevHub.gif?raw=true)
 
 There are several documentation articles which provide extended information about DevHub setup. Refer to them if you can't figure this out and additional help or guidance is required
+
 [Salesforce DX Developer Guide: Enable Dev Hub Features in Your Org](https://developer.salesforce.com/docs/atlas.en-us.230.0.sfdx_dev.meta/sfdx_dev/sfdx_setup_enable_devhub.htm)
+
 [Salesforce Help: Enable Dev Hub Features in Your Org](https://help.salesforce.com/articleView?id=sfdx_setup_enable_devhub.htm&type=0)
 
 ### Authorize your Dev Hub org for SFDX
