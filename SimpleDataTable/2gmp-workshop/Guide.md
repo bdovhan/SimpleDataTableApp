@@ -6,12 +6,13 @@ Git, SFDX CLI tools and at least one Dev Hub org and at least one Org with regis
 ## Agenda
 
 For this workshop, the following steps will be performed.
-The code will be split into two subdirectories to divide it into the base 2GMP package and the dependent 2GMP package.
-`SimpleDataTableController` class and related entities should be placed into the base 2GMP package
-`DataTableController` class and related entities should be placed into the dependent 2GMP package
-Then both packages will be installed into some test environment (Dev Hub org) might be reused for this purpose
+The code will be split into several subdirectories to divide it into the base 2GMP package and the dependent 2GMP packages.
+Base setup classes which generate data should be placed into the base setup 2GMP package
+`SimpleDataTableController` class and related entities should be placed into the dependent Simple Data Table 2GMP package
+`DataTableController` class and related entities should be placed into the dependent Data Table 2GMP package
+Then all the packages will be installed into some test environment. Namespace org or Dev Hub org might be reused for this purpose
 @NamespaceAccessible annotation should be used in the base package to expose the code for the dependent package.
-Both packages will share the same registered namespace.
+All the packages will share the same registered namespace.
 
 ## Fork
 
