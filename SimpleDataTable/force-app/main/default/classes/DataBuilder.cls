@@ -611,6 +611,10 @@ public class DataBuilder extends AbstractDataBuilder {
 
     public class RandomPicklistProcessor extends AbstractRandomValueProcessor{
         public override Object getValue(String sObjectName, String field, String valueDefinition) {
+            List<String> values = SchemaProvider.getPicklistValues( sObjectName, field );
+            if (values.isEmpty()) {
+                throw new DataBuilderException('Cannot randomize value for field ' + sObjectName + '.' + field + ' since picklist has no active values');
+            }
             return getRandom(SchemaProvider.getPicklistValues( sObjectName, field ));
         }
         public Boolean detectIfApplicable(String valueDefinition){
