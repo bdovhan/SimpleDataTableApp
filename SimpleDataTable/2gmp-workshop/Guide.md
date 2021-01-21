@@ -133,15 +133,17 @@ Open terminal by key combination Ctrl-\` (or Cmd-\` on MacOS)
 
 Execute the command 
 
-`./createPackage.sh DH "Base Setup" baseSetup`
+`./createPackage.sh DH "Base Setup" baseSetup userName@dev.hub`
 
 to create the base setup package.
+
+The `userName@dev.hub` is the username of the user on your devhub which should receive the error notifications.
 
 ### Create SimpleDataTable package
 
 Execute the command 
 
-`./createPackage.sh DH "Simple Data Table" simpleDataTable`
+`./createPackage.sh DH "Simple Data Table" simpleDataTable userName@dev.hub`
 
 to create the Simple Data Table package.
 
@@ -163,7 +165,7 @@ And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
 Execute the command 
 
-`./createPackage.sh DH "Data Table" dataTable`
+`./createPackage.sh DH "Data Table" dataTable userName@dev.hub`
 
 to create the Data Table package.
 
@@ -185,7 +187,9 @@ To install jq on Windows, execute the `installJQWindows.bat`.
 
 Then execute the following command to create the package version 
 
-`./createPackageVersion.sh DH namespaced_org "Base Setup" baseSetup "Setup.default();" ""`
+`./createPackageVersion.sh DH namespaced_org "Base Setup" baseSetup "Setup.default();" ""  your@email.com`
+
+Substiture `your@email.com` with your email to specify who should receive the email notification for package install and uninstalls
 
 This commands includes the post install and uninstall scripts, the code `Setup.default();` sets up some dummy data and executes on package install.
 
