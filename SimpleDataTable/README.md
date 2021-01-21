@@ -6,8 +6,8 @@ DataTable Aura component also displayed two instances of lightning:datatable com
 The only different between two components is the order and that the DataTable component displays link to contact record on the FirstName column.
 
 This repository is used for holding two different workshops:
- - [1. Migrate from Aura to LWC Workshop](https://github.com/bdovhan/SimpleDataTableApp/Guide.md)
- - [2. Migrate from 1GMP to 2GMP Workshop](https://github.com/bdovhan/SimpleDataTableApp/2gmp-workshop/Guide.md)
+ - [1. Migrate from Aura to LWC Workshop](https://github.com/bdovhan/SimpleDataTableApp/SimpleDataTable/Guide.md)
+ - [2. Migrate from 1GMP to 2GMP Workshop](https://github.com/bdovhan/SimpleDataTableApp/SimpleDataTable/2gmp-workshop/Guide.md)
 
 ## Prerequisites: Tools
 

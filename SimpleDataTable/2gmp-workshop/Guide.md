@@ -154,7 +154,7 @@ Include dependency to the Base Setup package by inserting the following code int
 		}
 	]
 ```
-![Copying and pasting the above code into sfdx-project.json](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/SimpleDataTableProjectCreation.gif?raw=true)
+![Copying and pasting the above code into sfdx-project.json](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/SimpleDataTablePackageCreation.gif?raw=true)
 
 And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
