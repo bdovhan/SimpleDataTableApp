@@ -1,7 +1,7 @@
 This project was imported\forked from Apex Data Generation library.
 https://github.com/bdovhan/ApexDataGeneration or https://github.com/patlatus/ApexDataGeneration
 This readme file contains description from the ApexDataGeneration library below.
-To find and read about this specific application, go to /SimpleDataTable/README.md
+To find and read about this specific application, go to [/SimpleDataTable/README.md](https://github.com/bdovhan/SimpleDataTableApp/tree/master/SimpleDataTable/README.md)
 
 # Apex Data Generation
 Salesforce (SFDC) Data Generation Framework written on Apex
@@ -14,6 +14,7 @@ Some simple example of how DataBuilder class can be used is the following
 First, we can create a dummy account record and label it as "account" in data map.
 Next, we can create in one line contact, contract and opportunity, attached to each other and to this account
 
+```
 DataBuilder db = new DataBuilder(); 
 db.build(
     'account',
@@ -24,6 +25,7 @@ db.build(
     'label',
     'Opportunity:Name=Opp,StageName=Closed Won,CloseDate=random.date,ContractId={Contract:AccountId=l.account,CustomerSignedId={Contact:LastName=LastName,AccountId=l.account}}'
 );
+```
 
 Method build is basic method to build data, it does insert DML operation, if you don't want to insert records, you can use build method with four parameter where last parameter is false.
 The first parameter is label map in data map and the second is generation string. It begins from SObject type separated by colon, then list of field values pairs follows, separated by comma.
@@ -34,22 +36,31 @@ Previously we put to data map one inserted account record with "account" label, 
 
 Some advanced usage examples you can find in examples folder like this one
 
+```
 DataBuilder b = new DataBuilder();
 b.loadJSONValuesFromStaticResource('names');
 b.buildFromGeneratorStringInStaticResource('employees', 'Employee', size);
+```
 
 You can consider Employee static resource for reference.
 
 For convenience, data samples can be loaded from static resource using method loadJSONValuesFromStaticResource
 For example, if there is "names" static resource with the given data
+
+```
 {"firstNames":["Aaliyah","Aaron"],
 "lastNames":["Smith","Johnson"]}
+```
+
 then "Aaliyah" and "Aaron" values will be loaded into dataset with label "firstNames" while "Smith" and "Johnson" will be loaded with label "lastNames".
 
 Let's consider the following generation string line 
+
+```
 b.build(
 'employees',
 'Contact:RecordTypeId=r.Employee,FirstName=rvs.firstNames,LastName=rvs.lastNames,BirthDate=random.date,HireDate__c=random.date,Branch__c=random.picklist,Position__c=random.picklist,Phone=random.ukrainian.cell.phone,Email=builder.FirstName[0]+LastName+@gmail.com'
+```
 
 Prefix 'r' is used to specify record type by name.
 Prefix 'rvs' is used to select one arbitrary random values of a value set.

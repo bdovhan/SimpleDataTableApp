@@ -195,35 +195,184 @@ This commands includes the post install and uninstall scripts, the code `Setup.d
 
 ### Create SimpleDataTable package version
 
-`./createPackageVersion.sh DH namespaced_org "Simple Data Table" simpleDataTable "" ""`
- 
+Execute the following command
+
+`./createPackageVersion.sh DH namespaced_org "Simple Data Table" simpleDataTable "" "" your@email.com`
+
+You should receive the error
+
+`Type is not visible: TestApplication.SchemaProvider, Details: SimpleDataTableController: Type is not visible: TestApplication.SchemaProvider`
+
+Now go to file `baseSetup/classes/SchemaProvider` and add
+
+`@namespaceAccessible`
+
+annotation to the class.
+
+Now rerun package version creation script for the Base Setup and then rerun package version create script for the Simple Data Table
+
+You should receive the error
+
+`1) Method is not visible: Map<String,Schema.SObjectField> TestApplication.SchemaProvider.getFieldMap(String), Details: SimpleDataTableController: Method is not visible: Map<String,Schema.SObjectField> TestApplication.SchemaProvider.getFieldMap(String)`
+
+Now go to file `baseSetup/classes/SchemaProvider` and add
+
+`@namespaceAccessible`
+
+annotation to the method getFieldMap.
+
+Now rerun package version creation script for the Base Setup and then rerun package version create script for the Simple Data Table
+
 ### Create DataTable package version
 
-`./createPackageVersion.sh DH namespaced_org "Data Table" dataTable "" ""`
+Execute the following command
 
-### Create Scratch Org and install the package version into the scratch org 
+`./createPackageVersion.sh DH namespaced_org "Data Table" dataTable "" "" your@email.com`
 
-### Install the package version into the scratch org 
+You should receive an error
+
+1) Type is not visible: TestApplication.SimpleDataTableController, Details: DataTableController: Type is not visible: TestApplication.SimpleDataTableController
+
+Now go to file `simpleDataTable/classes/SimpleDataTableController` and add
+
+`@namespaceAccessible`
+
+annotation to the class.
+
+Now rerun script for the Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+
+You should receive the following errors
+
+1) Method is not visible: Map<String,Map<String,Object>> TestApplication.SimpleDataTableController.getColumnsMap(String, List<String>), Details: DataTableController: Method is not visible: Map<String,Map<String,Object>> TestApplication.SimpleDataTableController.getColumnsMap(String, List<String>)
+2) Method is not visible: List<SObject> TestApplication.SimpleDataTableController.query(String, List<String>, String), Details: DataTableController: Method is not visible: List<SObject> TestApplication.SimpleDataTableController.query(String, List<String>, String)
+3) Type is not visible: TestApplication.Pluck, Details: DataTableController: Type is not visible: TestApplication.Pluck
+4) Type is not visible: TestApplication.AuraUtils, Details: DataTableController: Type is not visible: TestApplication.AuraUtils
+
+Now go to file `baseSetup/classes/Pluck` and add
+
+`@namespaceAccessible`
+
+annotation to the class.
+
+Now go to file `simpleDataTable/classes/AuraUtils` and add
+
+`@namespaceAccessible`
+
+annotation to the class.
+
+Now go to file `simpleDataTable/classes/SimpleDataTableController` and add
+
+`@namespaceAccessible`
+
+annotation to the methods `getColumnsMap` and `query`
+
+Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+
+You should receive the following errors on the last step
+
+1) Method is not visible: List<Map<String,Object>> TestApplication.Pluck.asList(List<SObject>), Details: DataTableController: Method is not visible: List<Map<String,Object>> TestApplication.Pluck.asList(List<SObject>)
+2) Method is not visible: System.AuraHandledException TestApplication.AuraUtils.buildAuraHandledException(Exception), Details: DataTableController: Method is not visible: System.AuraHandledException TestApplication.AuraUtils.buildAuraHandledException(Exception)
+
+Now go to file `baseSetup/classes/Pluck` and add
+
+`@namespaceAccessible`
+
+annotation to the method `asList`.
+
+Now go to file `simpleDataTable/classes/AuraUtils` and add
+
+`@namespaceAccessible`
+
+annotation to the method `buildAuraHandledException`.
+
+Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+
+You can make use of `rebuildAll` shortcut command 
+
+`./rebuildAll.sh DH namespaced_org your@email.com`
+
+for this.
+
+Now we have successfully modularized the application.
+
+### Make the app available in subscriber org
+
+Note that even though you can look through the package contents, you cannot open `DataTableTestApp` aura application in the subscriber org.
+
+Some modification are required to make this happen.
+
+Now go to file `dataTable/aura/DataTableTestApp` and add the code 
+
+`access="global"`
+
+to the header line.
+
+Now rerun script for the Data Table package version creation
+
+### Create Scratch Org and push the code into the scratch org 
+
+Execute the command
+
+`./createSO.sh DH`
+
+This command spins off the new scratch org and pushes the code from the three packages to scratch org. 
+
+You can debug any potential issues on this 
 
 ### Install the package version into the sandbox
 
-### Install the package version into the production
+Authorize some sandbox or another org and run the script 
+
+`sfdx force:config:set defaultusername=sandbox`
+`./installLatest.sh`
+
+to install the latest package versions into your sandbox org, where `sandbox` is the alias for your destination org.
 
 ## Promote package versions
 
 ### Promote SetupBase package version
 
-`./promote.sh rrr temp "Base Setup" baseSetup`
+Ideally you should promote package version to Managed Released version to be able to install them into production.
 
+This repository doesn't have unit tests so promote command will surely fail.
+
+However, you might try to see how this works in action
+
+`./promote.sh DH namespaced_org "Base Setup" baseSetup`
+
+Also if you have time and inspiration you might add unit tests and promote this successfully
 
 ### Promote SimpleDataTable package version
 
+Ideally you should promote package version to Managed Released version to be able to install them into production.
+
+This repository doesn't have unit tests so promote command will surely fail.
+
+However, you might try to see how this works in action
+
+`./promote.sh DH namespaced_org "Simple Data Table" simpleDataTable`
+
+Also if you have time and inspiration you might add unit tests and promote this successfully
+
 ### Promote DataTable package version
 
-### Promote Scratch Org and install the package version into the scratch org 
+Ideally you should promote package version to Managed Released version to be able to install them into production.
 
-### Install the promoted package version into the scratch org 
+This repository doesn't have unit tests so promote command will surely fail.
+
+However, you might try to see how this works in action
+
+`./promote.sh DH namespaced_org  "Data Table" dataTable`
+
+Also if you have time and inspiration you might add unit tests and promote this successfully
 
 ### Install the promoted package version into the production
 
+If you have added unit tests to promote the package versions, you can now install the application to production.
 
+Authorize some production and run the script 
+
+`sfdx force:config:set defaultusername=production`
+`./installLatest.sh`
+
+to install the latest package versions into your production org, where `production` is the alias for your destination org.
