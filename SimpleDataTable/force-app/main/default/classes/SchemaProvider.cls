@@ -4,6 +4,20 @@ public class SchemaProvider {
         System.debug('@@@ : ' + dfr.getName().remove(dfr.getLocalName()));
         return dfr.getName().remove(dfr.getLocalName());
     }
+    
+    @namespaceAccessible
+    public static List<String> prefixFields(List<String> fields) {
+        List<String> namespacedFields = new List<String>();
+        String namespacePrefix = getNamespace();
+        for (String field: fields) {
+            if (field.endsWith('__c')) {
+                namespacedFields.add( namespacePrefix + field );
+            } else {
+                namespacedFields.add( field );
+            }
+        }
+        return namespacedFields;
+    }
 
 
 

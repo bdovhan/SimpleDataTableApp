@@ -83,7 +83,7 @@ public inherited sharing virtual class DataTableController extends SimpleDataTab
     ) {
         try{
             return new DataTableController().getColumnsData(
-                sObjectName, sObjectFieldsNames, whereClause,overrides,valueModifiers
+                sObjectName, SchemaProvider.prefixFields(sObjectFieldsNames), whereClause,overrides,valueModifiers
             );
         } catch(Exception e) {
             throw AuraUtils.buildAuraHandledException(e);
