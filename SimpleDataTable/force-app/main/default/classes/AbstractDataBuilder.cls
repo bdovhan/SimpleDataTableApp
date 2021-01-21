@@ -19,7 +19,17 @@
  *   AbstractDataBuilder is base class which defines how data is generated.
  *   You can either use default DataBuilder implementation or extend it and use some customization
  */
-public abstract class AbstractDataBuilder {
+public inherited sharing abstract class AbstractDataBuilder {
+    public without sharing class StaticResourceProvider {
+        private String load(String staticResourceName) {
+            List<StaticResource> srs = [ SELECT Name, Body FROM StaticResource WHERE Name = :staticResourceName ];
+            System.assertEquals( 1, srs.size(), 'Static Resource with name '+ staticResourceName +
+            ' was not found. Zero: ' + srs.size());
+            System.debug( 'srs[0].Body' + srs[0].Body.toString());
+            return srs[0].Body.toString();
+        }
+    }
+
     public abstract List<SObject> build(String label, String generatorString, Integer size, Boolean doInsert);
     
     public List<SObject> build(String label, String generatorString, Integer size) {
@@ -44,20 +54,13 @@ public abstract class AbstractDataBuilder {
     }
 
     public void loadJSONValuesFromStaticResource(String staticResourceName) {
-        List<StaticResource> srs = [ SELECT Id, Name, Body FROM StaticResource WHERE Name = :staticResourceName ];
-        System.assertEquals( 1, srs.size(), 'Static Resource with name '+ staticResourceName +
-            ' was not found. Zero: ' + srs.size());
-        System.debug( 'srs[0].Body' + srs[0].Body.toString());
-        Map<String, Object> jsonDataMap = (Map<String, Object>) JSON.deserializeUntyped( srs[0].Body.toString() );
+        Map<String, Object> jsonDataMap = (Map<String, Object>) JSON.deserializeUntyped( new StaticResourceProvider().load(staticResourceName) );
         for ( String key: jsonDataMap.keySet() ) {
             putValues( key, (List<Object>) jsonDataMap.get( key ) );
         }
     }
 
     public void buildFromGeneratorStringInStaticResource(String label, String staticResourceName, Integer size) {
-        List<StaticResource> srs = [ SELECT Id, Name, Body FROM StaticResource WHERE Name = :staticResourceName ];
-        System.assertEquals( 1, srs.size(), 'Static Resource with name '+ staticResourceName +
-            ' was not found. Zero: ' + srs.size());
-        build(label,  srs[0].Body.toString(), size );
+        build(label, new StaticResourceProvider().load(staticResourceName), size );
     }
 }

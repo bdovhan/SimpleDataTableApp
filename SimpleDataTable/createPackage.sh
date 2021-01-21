@@ -1,1 +1,1 @@
-sfdx force:package:create --name "Test App: $2" --packagetype Managed --path "$3" -v $1
+sfdx force:package:create -n "Test App: $2" -t Managed -r "$3" -v $1 -o $4

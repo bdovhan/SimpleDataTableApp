@@ -1,0 +1,1 @@
+find . -type f -name "*-meta.xml" -exec sed -i 's/45.0/50.0/g' {} \;

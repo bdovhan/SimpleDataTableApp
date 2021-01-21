@@ -1,4 +1,12 @@
 public class SchemaProvider {
+    private static String getNamespace() {
+        Schema.DescribeFieldResult dfr = Contact.TestApplication__Branch__c.getDescribe();
+        System.debug('@@@ : ' + dfr.getName().remove(dfr.getLocalName()));
+        return dfr.getName().remove(dfr.getLocalName());
+    }
+
+
+
     private static Map<String, SObjectType> globalDescribe = new Map<String, SObjectType>();
     private static SObjectType getDescribe(String token) {
         SObjectType describe = globalDescribe.get(token);
@@ -18,7 +26,7 @@ public class SchemaProvider {
         List<String> values = new List<String>();
         Schema.DescribeFieldResult dfResult;
 
-        Schema.SObjectField soField = getDescribe(objName).getDescribe().fields.getMap().get(field);
+        Schema.SObjectField soField = getDescribe(objName).getDescribe().fields.getMap().get(getNamespace() + field);
         if (soField == null) return values;
 
         // get the field result, return if not found or if field isn't a picklist

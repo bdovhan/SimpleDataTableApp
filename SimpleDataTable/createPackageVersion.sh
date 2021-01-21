@@ -1,16 +1,17 @@
 buildVersion=$(cat sfdx-project.json | jq '.packageAliases | to_entries | length+1')
 install=$(cat template/classes/InstallHandler.cls)
 install1=${install/<BuildVersion>/$buildVersion}
-install2=${install1/<PackageName>/Test App: $3}
-echo "${install2/<PostInstallCode>/$5}" > $4/main/default/classes/InstallHandler.cls
+install2=${install1//<PackageName>/Test App: $3}
+echo "${install2/<PostInstallCode>/$5}" > $4/classes/InstallHandler.cls
 uninstall=$(cat template/classes/UninstallHandler.cls)
 uninstall1=${uninstall/<BuildVersion>/$buildVersion}
-uninstall2=${uninstall1/<PackageName>/Test App: $3}
-echo "${uninstall/<PostUninstallCode>/$6}" > $4/main/default/classes/UninstallHandler.cls
-cp template/classes/MailUtils.cls $4/main/default/classes/MailUtils.cls
-cp template/classes/MailUtils.cls-meta.xml $4/main/default/classes/MailUtils.cls-meta.xml
-cp template/classes/InstallHandler.cls-meta.xml $4/main/default/classes/InstallHandler.cls-meta.xml
-cp template/classes/UninstallHandler.cls-meta.xml $4/main/default/classes/UninstallHandler.cls-meta.xml
+uninstall2=${uninstall1//<PackageName>/Test App: $3}
+echo "${uninstall/<PostUninstallCode>/$6}" > $4/classes/UninstallHandler.cls
+mailUtils=$(cat template/classes/MailUtils.cls)
+echo "${mailUtils/<email>/$7}" > $4/classes/MailUtils.cls
+cp template/classes/MailUtils.cls-meta.xml $4/classes/MailUtils.cls-meta.xml
+cp template/classes/InstallHandler.cls-meta.xml $4/classes/InstallHandler.cls-meta.xml
+cp template/classes/UninstallHandler.cls-meta.xml $4/classes/UninstallHandler.cls-meta.xml
 
 #versioncreate="sfdx force:package:version:create -d force-app -v $1 -x -w 60 --skipvalidation --postinstallscript InstallHandler --uninstallscript UninstallHandler"
 #echo $versioncreate
@@ -27,8 +28,7 @@ default=$(sfdx config:get defaultusername | awk '/^==|^──|^Name/ {next}{prin
 sfdx force:config:set defaultusername=$2
 
 ./uninstall.sh
-sfdx force:package:install -p $pid -r -w 600
-sfdx force:org:open
+sfdx force:package:install -p $pid -r -b 20 -w 600
 
 sfdx config:set defaultusername=$default
 sfdx config:set defaultdevhubusername=$hub
