@@ -135,3 +135,7 @@ Execute this command
 `sfdx force:auth:web:login -a sand -r https://test.salesforce.com/` 
 
 where `sand` is the alias for you sandbox org and then entering login credentials for your sandbox.
+
+# Thanks
+
+Now you should be ready for a 1GMP to 2GMP migration workshop.

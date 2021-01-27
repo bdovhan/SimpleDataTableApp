@@ -411,8 +411,27 @@ If you have added unit tests to promote the package versions, you can now instal
 Authorize some production and run the script 
 
 `sfdx force:config:set defaultusername=production`
+
 `./installLatest.sh`
 
 to install the latest package versions into your production org, where `production` is the alias for your destination org.
 
 You might consider using `DH` or `namespaced_org` as your `production` environment.
+
+## Useful shortcut commands: rebuildAll and promoteAll
+
+You can make use of `rebuildAll` shortcut command 
+
+`./rebuildAll.sh DH sand your@email.com`
+
+to rebuild all the three package versions.
+
+You can make use of `promoteAll` shortcut command 
+
+`./promoteAll.sh DH sand your@email.com`
+
+to rebuild all the three package versions.
+
+# Thanks
+
+Hopefully you learned a lot using this workshop. You might consider to participate in the Aura to LWC Migration workshop as well
