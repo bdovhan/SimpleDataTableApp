@@ -57,13 +57,10 @@ Run the following command to determine if you have Default DevHub username set u
 
 If the command response has blank space under Value column, this means that you don't have one and you need setup it using the following steps
 
-`=== Get Config`
+|  Name | Value | Success |
+| ------------- | ------------- | ------------- |
+| defaultdevhubusername | | true  |
 
-`Name                   Value  Success`
-
-`─────────────────────  ─────  ───────`
-
-`defaultdevhubusername         true`
 
 ### Choose the org where you can enable Dev Hub feature
 
