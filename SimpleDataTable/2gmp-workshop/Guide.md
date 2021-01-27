@@ -1,7 +1,19 @@
 # Migrate from 1GMP to 2GMP Workshop Guide
 
-Read [the Prerequisites section from Readme file here](../README.md)
+Read [the Prerequisites here](Prerequisites.md)
+
 Git, SFDX CLI tools and at least one Dev Hub org and at least one Org with registered namespace are required for this workshop.
+
+Let's list out again the full prerequisite list.
+
+Tools needed:
+ - Git (Git Bash for Windows is required for Windows users)
+ - SFDX CLI
+ - IDE (like Visual Studio Code)
+
+Salesforce org needed:
+ - Dev Hub org. [You can signup for 30-day DX Trial Org here](https://developer.salesforce.com/promotions/orgs/dx-signup) or enabled Dev Hub on Developer Edition Org which doesn't have namespace
+ - Namespace Org [You can signup for Developer Edition Org here](https://developer.salesforce.com/signup) 
 
 ## Agenda
 
@@ -70,42 +82,16 @@ Move `DataTableTestApp`, `DataTable` from `force-app/main/default/aura` folder t
 
 Move classes `DataTableController` from `force-app/main/default/classes` folder to `dataTable/classes` folder
  - `DataTableController.cls` and `DataTableController.cls-meta.xml`
-  
-## Specify the namespace
-
-Select the namespace org you would like to use and copy the namespace value into the project.json file.
-
-You can open the namespace package settings by executing sfdx command 
-
-`sfdx force:org:open -p /0A2?setupid=Package -u namespaced_org`
-
-where `namespaced_org` is the alias of your namespaced org.
-
-If you haven't connected your namespace org to sfdx, you can do that by executing the command
-
-`sfdx force:auth:web:login -d -a namespaced_org` 
-
-and then entering login credentials for your namespaced org.
-
-Once opened the packaging namespace tab, you can read it from the screen or copy Namespace Prefix from the UI
-
-![Package Types Allowed: Managed and Unmanaged; Managed Package: Test; Namespace Prefix: TestApplication](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/TestApplication.png?raw=true)
-
-If you don't have any namespaced org yet, you can just register a developer edition org. When you open Packages tab you will see that there is no Namespace prefix is defined.
-
-![Package Types Allowed: Unmanaged Only; Managed Package: None; Namespace Prefix: None](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/NoNamespace.png?raw=true)
-
-If you click Edit button, you can select and define your own namespace here.
 
 ### Link the namespace org to the Dev Hub
 
 Open Namespace Registries tab by executing the following command
 
-`sfdx force:org:open -p /1NR -u DH`
+`sfdx force:org:open -p 1NR -u DH`
 
 and click Link Namespace button.
 
-If you haven't connected your DevHub org to SFDX, please to the [README Guide and complete prerequisite required](https://github.com/bdovhan/SimpleDataTableApp/Guide.md)
+If you haven't connected your DevHub org to SFDX, please to the [Prerequisites here](Prerequisites.md) and complete it
 
 A popup should show up, if it is not shown up, please check your browser setting and open popup manually and consider to allow popup for Salesforce site.
 
@@ -117,6 +103,8 @@ For the more information, consider reading [Salesforce Documentation](https://he
 
 ### Specify the namespace in the project.json file
 
+If you haven't registered your namespace in the namespace org, please read the [Prerequisites here](Prerequisites.md) and complete it
+
 Now go to VSCode and open the sfdx-project.json file and insert the copied namespace prefix into line 8
 
 ![Copying and pasting TestApplication namespace into namespace key value](https://github.com/bdovhan/SimpleDataTableApp/blob/master/SimpleDataTable/2gmp-workshop/Namespace.gif?raw=true)
@@ -124,8 +112,6 @@ Now go to VSCode and open the sfdx-project.json file and insert the copied names
 And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
 ## Create packages
-
-
 
 ### Create SetupBase package
 
@@ -179,15 +165,26 @@ Include dependency to the Simple Data Table package by inserting the following c
 		}
 	]
 ```
+
+### Remove the default project
+
+Remove `force-app` project and set `BaseSetup` as default package in sfdx-project.json
+
+Also delelte the `force-app` folder
+
 ## Create package versions
 
 ### Create SetupBase package version
 Before you run this program, please make sure you have installed `jq`.
-To install jq on Windows, execute the `installJQWindows.bat`.
+To install jq on Windows, execute the `./installJQWindows.bat`.
+
+If install JQ doesn't work, try to copy commands into powershell console directly.
+
+`[Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"`
 
 Then execute the following command to create the package version 
 
-`./createPackageVersion.sh DH namespaced_org "Base Setup" baseSetup "Setup.default();" ""  your@email.com`
+`./createPackageVersion.sh DH sand "Base Setup" baseSetup "Setup.default();" ""  your@email.com`
 
 Substiture `your@email.com` with your email to specify who should receive the email notification for package install and uninstalls
 
@@ -197,7 +194,7 @@ This commands includes the post install and uninstall scripts, the code `Setup.d
 
 Execute the following command
 
-`./createPackageVersion.sh DH namespaced_org "Simple Data Table" simpleDataTable "" "" your@email.com`
+`./createPackageVersion.sh DH sand "Simple Data Table" simpleDataTable "" "" your@email.com`
 
 You should receive the error
 
@@ -227,7 +224,7 @@ Now rerun package version creation script for the Base Setup and then rerun pack
 
 Execute the following command
 
-`./createPackageVersion.sh DH namespaced_org "Data Table" dataTable "" "" your@email.com`
+`./createPackageVersion.sh DH sand "Data Table" dataTable "" "" your@email.com`
 
 You should receive an error
 
@@ -239,7 +236,7 @@ Now go to file `simpleDataTable/classes/SimpleDataTableController` and add
 
 annotation to the class.
 
-Now rerun script for the Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+Now rerun script for the Simple Data Table package version creation and then rerun script for the Data Table package version creation
 
 You should receive the following errors
 
@@ -266,7 +263,7 @@ Now go to file `simpleDataTable/classes/SimpleDataTableController` and add
 
 annotation to the methods `getColumnsMap` and `query`
 
-Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun script for the Data Table package version creation
 
 You should receive the following errors on the last step
 
@@ -285,11 +282,11 @@ Now go to file `simpleDataTable/classes/AuraUtils` and add
 
 annotation to the method `buildAuraHandledException`.
 
-Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun pscript for the Data Table package version creation
+Now rerun script for the Base Setup package version, Simple Data Table package version creation and then rerun script for the Data Table package version creation
 
 You can make use of `rebuildAll` shortcut command 
 
-`./rebuildAll.sh DH namespaced_org your@email.com`
+`./rebuildAll.sh DH sand your@email.com`
 
 for this.
 
@@ -297,17 +294,23 @@ Now we have successfully modularized the application.
 
 ### Make the app available in subscriber org
 
-Note that even though you can look through the package contents, you cannot open `DataTableTestApp` aura application in the subscriber org.
+Note that even though you can look through the package contents, you cannot open `DataTableTestApp` or `SimpleDataApp` aura application in the subscriber org.
 
 Some modification are required to make this happen.
 
-Now go to file `dataTable/aura/DataTableTestApp` and add the code 
+Now go to file `dataTable/aura/DataTableTestApp/DataTableTestApp.app` and add the code 
 
 `access="global"`
 
 to the header line.
 
-Now rerun script for the Data Table package version creation
+Also go to file `simpleDataTable/aura/SimpleDataApp/SimpleDataApp.app` and add the code 
+
+`access="global"`
+
+to the header line.
+
+Now rerun script for the Simple Data Table and Data Table package versions creation
 
 ### Create Scratch Org and push the code into the scratch org 
 
@@ -338,7 +341,7 @@ This repository doesn't have unit tests so promote command will surely fail.
 
 However, you might try to see how this works in action
 
-`./promote.sh DH namespaced_org "Base Setup" baseSetup`
+`./promote.sh DH sand "Base Setup" baseSetup "Setup.default();" ""  your@email.com`
 
 Also if you have time and inspiration you might add unit tests and promote this successfully
 
@@ -350,7 +353,7 @@ This repository doesn't have unit tests so promote command will surely fail.
 
 However, you might try to see how this works in action
 
-`./promote.sh DH namespaced_org "Simple Data Table" simpleDataTable`
+`./promote.sh DH sand "Simple Data Table" simpleDataTable "" ""  your@email.com`
 
 Also if you have time and inspiration you might add unit tests and promote this successfully
 
@@ -362,9 +365,44 @@ This repository doesn't have unit tests so promote command will surely fail.
 
 However, you might try to see how this works in action
 
-`./promote.sh DH namespaced_org  "Data Table" dataTable`
+`./promote.sh DH sand  "Data Table" dataTable "" ""  your@email.com`
 
 Also if you have time and inspiration you might add unit tests and promote this successfully
+
+You might face with the following error
+
+`ERROR running force:package:version:create:  An error occurred while trying to install a package dependency, ID: The package you're installing depends on package 'Test App: Base Setup', version '0.1'. Install package 'Test App: Base Setup' in the target org before you install package 'Test App: Simple Data Table'`
+
+then just add the dependency of the third package into the first package
+
+```
+                {
+                    "package": "Test App: Base Setup",
+                    "versionNumber": "0.1.0.LATEST"
+                },
+``` 
+
+so the `Data Table` project definition will look like the following
+
+```
+        {
+            "path": "dataTable",
+            "package": "Test App: Data Table",
+            "versionName": "ver 0.1",
+            "versionNumber": "0.1.0.NEXT",
+            "default": false,
+            "dependencies": [
+                {
+                    "package": "Test App: Base Setup",
+                    "versionNumber": "0.1.0.LATEST"
+                },
+                {
+                    "package": "Test App: Simple Data Table",
+                    "versionNumber": "0.1.0.LATEST"
+                }
+            ]
+        }
+```
 
 ### Install the promoted package version into the production
 
@@ -376,3 +414,5 @@ Authorize some production and run the script
 `./installLatest.sh`
 
 to install the latest package versions into your production org, where `production` is the alias for your destination org.
+
+You might consider using `DH` or `namespaced_org` as your `production` environment.

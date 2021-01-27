@@ -3,7 +3,7 @@ sfdx config:set defaultdevhubusername=$1
 default=$(sfdx config:get defaultusername | awk '/^==|^──|^Name/ {next}{print $2}')
 sfdx force:org:create -s -d 30 -a o$(( RANDOM % 1000)) -f config/project-scratch-def.json
 sfdx force:source:push
-
+sfdx force:apex:execute -f apex/defaultSetup.apex
 
 sfdx force:org:open -p c/SimpleDataApp.app
 sfdx force:org:open -p c/DataTableTestApp.app

@@ -42,10 +42,6 @@ sfdx force:config:set defaultusername=$2
 sfdx force:package:install -p $pid -r -w 600
 sfdx force:org:open -p "0A3?setupid=ImportedPackage"
 
-#sfdx force:org:create -s -d 30 -a o$(( RANDOM % 1000)) -f config/project-scratch-def.json
-#sfdx force:package:install -p $pid -r -w 600
-#sfdx force:org:open
-
 sfdx config:set defaultusername=$default
 sfdx config:set defaultdevhubusername=$hub
  

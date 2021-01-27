@@ -12,7 +12,7 @@ tablePid=$(cat sfdx-project.json | jq '[.packageAliases | to_entries [] | select
 
 sfdx force:package:install -p $tablePid -r -w 600
 
-namespace = $(cat sfdx-project.json | jq '.namespace' -r)
+namespace=$(cat sfdx-project.json | jq '.namespace' -r)
 
-sfdx force:org:open -p $namespace/SimpleDataApp.app
-sfdx force:org:open -p $namespace/DataTableTestApp.app
+sfdx force:org:open -p "$namespace/SimpleDataApp.app"
+sfdx force:org:open -p "$namespace/DataTableTestApp.app"

@@ -1,6 +1,6 @@
 public class SchemaProvider {
     private static String getNamespace() {
-        Schema.DescribeFieldResult dfr = Contact.TestApplication__Branch__c.getDescribe();
+        Schema.DescribeFieldResult dfr = Contact.Branch__c.getDescribe();
         System.debug('@@@ : ' + dfr.getName().remove(dfr.getLocalName()));
         return dfr.getName().remove(dfr.getLocalName());
     }

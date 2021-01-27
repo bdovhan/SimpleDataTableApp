@@ -19,9 +19,6 @@ cp template/classes/MailUtils.cls-meta.xml $4/classes/MailUtils$4.cls-meta.xml
 cp template/classes/InstallHandler.cls-meta.xml $4/classes/InstallHandler$4.cls-meta.xml
 cp template/classes/UninstallHandler.cls-meta.xml $4/classes/UninstallHandler$4.cls-meta.xml
 
-#versioncreate="sfdx force:package:version:create -d force-app -v $1 -x -w 60 --skipvalidation --postinstallscript InstallHandler --uninstallscript UninstallHandler"
-#echo $versioncreate
-
 pid=$(sfdx force:package:version:create -v $1 -p "Test App: $3" -x -w 60 --skipvalidation --postinstallscript InstallHandler$4 --uninstallscript UninstallHandler$4 | awk '$1 ~ /Successfully/ { print $11 }')
 echo "Hi client. Created a new Beta test version of installable package https://login.salesforce.com/packaging/installPackage.apexp?p0=$pid
 
