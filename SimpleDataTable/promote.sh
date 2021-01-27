@@ -19,7 +19,7 @@ cp template/classes/MailUtils.cls-meta.xml $4/classes/MailUtils$4.cls-meta.xml
 cp template/classes/InstallHandler.cls-meta.xml $4/classes/InstallHandler$4.cls-meta.xml
 cp template/classes/UninstallHandler.cls-meta.xml $4/classes/UninstallHandler$4.cls-meta.xml
 
-pid=$(sfdx force:package:version:create -x -v $1 -p "Test App: $3"  -w 60 --codecoverage --postinstallscript InstallHandler --uninstallscript UninstallHandler | awk '$1 ~ /Successfully/ { print $11 }')
+pid=$(sfdx force:package:version:create -x -v $1 -p "Test App: $3"  -w 60 --codecoverage --postinstallscript InstallHandler$4 --uninstallscript UninstallHandler$4 | awk '$1 ~ /Successfully/ { print $11 }')
 
 sfdx force:package:version:promote -n -v $1 -p $pid
 
@@ -38,8 +38,9 @@ sfdx config:set defaultdevhubusername=$1
 default=$(sfdx config:get defaultusername | awk '/^==|^──|^Name/ {next}{print $2}')
 sfdx force:config:set defaultusername=$2
 
+./uninstall.sh "$3"
 sfdx force:package:install -p $pid -r -w 600
-sfdx force:org:open 
+sfdx force:org:open -p "0A3?setupid=ImportedPackage"
 
 #sfdx force:org:create -s -d 30 -a o$(( RANDOM % 1000)) -f config/project-scratch-def.json
 #sfdx force:package:install -p $pid -r -w 600
