@@ -71,9 +71,7 @@ In `simpleDataTable` folder create subfolders
  
 Move `SimpleDataApp`, `SimpleDataTable`, `FakeOpportunityData` and `SimpleEmployeeList` from `force-app/main/default/aura` folder to `simpleDataTable/aura` folder
 
---Remove `<c:FakeOpportunityData/>` reference from `SimpleDataApp.app`.--
-
-Move classes `AuraUtils`, `Pluck`, `SchemaProvider`, `SimpleDataTableController`, `Setup`, `DataBuilder` and `AbstractDataBuilder` from `force-app/main/default/classes` folder to `base_simpleDataTable/classes` folder
+Move classes `AuraUtils` and `SimpleDataTableController` from `force-app/main/default/classes` folder to `base_simpleDataTable/classes` folder
  - `SimpleDataTableController.cls` and `SimpleDataTableController.cls-meta.xml`
  - `AuraUtils.cls` and `AuraUtils.cls-meta.xml`
 
@@ -85,10 +83,10 @@ In `dataTable` folder create subfolders
  
 Move `DataTableTestApp`, `DataTable` from `force-app/main/default/aura` folder to `dataTable/aura` folder
 
---Remove `<c:FakeOpportunityData/>` reference from `DataTableTestApp.app`.--
-
 Move classes `DataTableController` from `force-app/main/default/classes` folder to `dataTable/classes` folder
  - `DataTableController.cls` and `DataTableController.cls-meta.xml`
+
+The `force-app/main/default` folder now should be empty and it might be removed.
 
 ## 3. Setup namespace
 
@@ -128,7 +126,7 @@ And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
 ### 4a. Create SetupBase package
 
-Open terminal by key combination Ctrl-\` (or Cmd-\` on MacOS)
+Open terminal by key combination Ctrl-\`
 
 Execute the command 
 
