@@ -16,22 +16,22 @@ Salesforce organizations needed:
  - Namespace Org [You can signup for Developer Edition Org here](https://developer.salesforce.com/signup) 
  - Some org or sandbox to install the package
 
-## Prerequisites: Tools
+## 1. Prerequisites: Tools
 
-### Install SFDX CLI:
+### 1a. Install SFDX CLI:
 [Use installers for Windows, MacOS](https://developer.salesforce.com/tools/sfdxcli)
 [Follow the Salesforce Guide for Linux installation](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli.htm)
 
-### Install Git
+### 1b. Install Git
 If you are using Windows, also [install Git Bash for Windows](https://gitforwindows.org/)
 
-### Register Github user
+### 1c. Register Github user
 
 You need to register a Github user if you don't have one
 
 Go to [Github Sign up page](https://github.com/join) if you don't have an active Github user 
 
-### Generate SSH Key
+### 1d. Generate SSH Key
 
 It is convenient to use SSH key while working with Github repositories. You can always fork and clone repository using https:// username and password authentication, however, it is better to use ssh key to avoid typing your password every time.
 
@@ -45,11 +45,11 @@ Copy the SSH key to your clipboard. Based on your OS version, you might use eith
 Go to [Github: Add New SSH Key](https://github.com/settings/ssh/new)
 and paste the key from clipboard there and save
 
-## Prerequisites: Setup DevHub org
+## 2. Prerequisites: Setup DevHub org
 
 This workshop required DevHub org, so it must be set up
 
-### Verify if you have already a Dev Hub org setup
+### 2a. Verify if you have already a Dev Hub org setup
 
 Run the following command to determine if you have Default DevHub username set up
 
@@ -62,7 +62,7 @@ If the command response has blank space under Value column, this means that you 
 | defaultdevhubusername | | true  |
 
 
-### Choose the org where you can enable Dev Hub feature
+### 2b. Choose the org where you can enable Dev Hub feature
 
 You can enabled DevHub feature in your trial production or Developer Edition org without namespace registered. Also Partner Developer Edition org may not be used.
 
@@ -86,7 +86,7 @@ There are several documentation articles which provide extended information abou
 
 [Salesforce Help: Enable Dev Hub Features in Your Org](https://help.salesforce.com/articleView?id=sfdx_setup_enable_devhub.htm&type=0)
 
-### Authorize your Dev Hub org for SFDX
+### 2c. Authorize your Dev Hub org for SFDX
 
 Go to CMD on Windows or Terminal in MacOS or Linux and execute the following command where you might replace DH with your own alias for your Dev Hub org
 
@@ -94,7 +94,7 @@ Go to CMD on Windows or Terminal in MacOS or Linux and execute the following com
 
 The browser window should open where you have to login to your Dev Hub org and Authorize SFDX CLI connected app
 
-## Prerequisites: Namespace org
+## 3. Prerequisites: Namespace org
 
 This workshop required Namespace org, so it must be set up.
 If you have already Developer Edition org with registered namespace, no action is needed for this step.
@@ -122,7 +122,7 @@ If you don't have any namespaced org yet, you can just register one. On the Pack
 
 If you click Edit button, you can select and define your own namespace here. You don't have to create any first-generation package though
 
-## Prerequisites: Sandbox org
+## 4. Prerequisites: Sandbox org
 
 Select some sandbox or developer edition org for package installation test.
 

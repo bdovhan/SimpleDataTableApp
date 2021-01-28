@@ -26,11 +26,13 @@ Then all the packages will be installed into some test environment. Namespace or
 @NamespaceAccessible annotation should be used in the base package to expose the code for the dependent package.
 All the packages will share the same registered namespace.
 
-## Fork
+## 1. Fork
 
 Fork repository https://github.com/bdovhan/SimpleDataTableApp/tree/master/SimpleDataTable
 
-## Split the project into three pieces
+Use `git clone` command to clone it to your local folder
+
+## 2. Split the project into three pieces
 
 Open `SimpleDataTable` subfolder in VSCode
 
@@ -38,7 +40,7 @@ Split the project into three subprojects: baseSetup, simpleDataTable and dataTab
 
 Create subfolders `baseSetup`, `simpleDataTable` and `dataTable`
 
-### Create baseSetup subProject
+### 2a. Create baseSetup subProject
 
 In `baseSetup` folder create subfolders
  - `classes`
@@ -56,7 +58,7 @@ Move `Contact` folder from `force-app/main/default/objects` folder to `baseSetup
 
 Move `names` and `Employee` static resources from `force-app/main/default/statisresources` folder to `baseSetup/statisresources` folder
 
-### Create simpleDataTable subProject
+### 2b. Create simpleDataTable subProject
 
 In `simpleDataTable` folder create subfolders
  - `aura`
@@ -70,7 +72,7 @@ Move classes `AuraUtils`, `Pluck`, `SchemaProvider`, `SimpleDataTableController`
  - `SimpleDataTableController.cls` and `SimpleDataTableController.cls-meta.xml`
  - `AuraUtils.cls` and `AuraUtils.cls-meta.xml`
 
-### Create dataTable subProject
+### 2c. Create dataTable subProject
 
 In `dataTable` folder create subfolders
  - `aura`
@@ -83,7 +85,13 @@ Move `DataTableTestApp`, `DataTable` from `force-app/main/default/aura` folder t
 Move classes `DataTableController` from `force-app/main/default/classes` folder to `dataTable/classes` folder
  - `DataTableController.cls` and `DataTableController.cls-meta.xml`
 
-### Link the namespace org to the Dev Hub
+## 3. Setup namespace
+
+Assumming that you have completed prerequisites and have Developer Edition org with namespace setup, you may follow these steps.
+
+Otherwise you need to return to [Prerequisites](Prerequisites.md) and complete it
+
+### 3a. Link the namespace org to the Dev Hub
 
 Open Namespace Registries tab by executing the following command
 
@@ -91,7 +99,7 @@ Open Namespace Registries tab by executing the following command
 
 and click Link Namespace button.
 
-If you haven't connected your DevHub org to SFDX, please to the [Prerequisites here](Prerequisites.md) and complete it
+If you haven't connected your DevHub org to SFDX, please return to the [Prerequisites here](Prerequisites.md) and complete it
 
 A popup should show up, if it is not shown up, please check your browser setting and open popup manually and consider to allow popup for Salesforce site.
 
@@ -101,7 +109,7 @@ This would link you namespaced org to the Dev Hub
 
 For the more information, consider reading [Salesforce Documentation](https://help.salesforce.com/articleView?id=sfdx_dev_reg_namespace.htm&type=5)
 
-### Specify the namespace in the project.json file
+### 3b. Specify the namespace in the project.json file
 
 If you haven't registered your namespace in the namespace org, please read the [Prerequisites here](Prerequisites.md) and complete it
 
@@ -111,9 +119,9 @@ Now go to VSCode and open the sfdx-project.json file and insert the copied names
 
 And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
-## Create packages
+## 4. Create packages
 
-### Create SetupBase package
+### 4a. Create SetupBase package
 
 Open terminal by key combination Ctrl-\` (or Cmd-\` on MacOS)
 
@@ -125,7 +133,7 @@ to create the base setup package.
 
 The `userName@dev.hub` is the username of the user on your devhub which should receive the error notifications.
 
-### Create SimpleDataTable package
+### 4b. Create SimpleDataTable package
 
 Execute the command 
 
@@ -147,7 +155,7 @@ Include dependency to the Base Setup package by inserting the following code int
 
 And save by using key combination Ctrl-S (or Cmd-S on MacOS).
 
-### Create DataTable package
+### 4c. Create DataTable package
 
 Execute the command 
 
@@ -166,15 +174,15 @@ Include dependency to the Simple Data Table package by inserting the following c
 	]
 ```
 
-### Remove the default project
+### 4d. Remove the default project
 
 Remove `force-app` project and set `BaseSetup` as default package in sfdx-project.json
 
 Also delelte the `force-app` folder
 
-## Create package versions
+## 5. Create package versions
 
-### Create SetupBase package version
+### 5a. Create SetupBase package version
 Before you run this program, please make sure you have installed `jq`.
 To install jq on Windows, execute the `./installJQWindows.bat`.
 
@@ -190,7 +198,7 @@ Substiture `your@email.com` with your email to specify who should receive the em
 
 This commands includes the post install and uninstall scripts, the code `Setup.default();` sets up some dummy data and executes on package install.
 
-### Create SimpleDataTable package version
+### 5b. Create SimpleDataTable package version
 
 Execute the following command
 
@@ -220,7 +228,7 @@ annotation to the method getFieldMap.
 
 Now rerun package version creation script for the Base Setup and then rerun package version create script for the Simple Data Table
 
-### Create DataTable package version
+### 5c. Create DataTable package version
 
 Execute the following command
 
@@ -292,7 +300,7 @@ for this.
 
 Now we have successfully modularized the application.
 
-### Make the app available in subscriber org
+### 5d. Make the app available in subscriber org
 
 Note that even though you can look through the package contents, you cannot open `DataTableTestApp` or `SimpleDataApp` aura application in the subscriber org.
 
@@ -312,7 +320,7 @@ to the header line.
 
 Now rerun script for the Simple Data Table and Data Table package versions creation
 
-### Create Scratch Org and push the code into the scratch org 
+### 5e. Create Scratch Org and push the code into the scratch org 
 
 Execute the command
 
@@ -322,18 +330,19 @@ This command spins off the new scratch org and pushes the code from the three pa
 
 You can debug any potential issues on this 
 
-### Install the package version into the sandbox
+### 5f. Install the package version into the sandbox
 
 Authorize some sandbox or another org and run the script 
 
 `sfdx force:config:set defaultusername=sandbox`
+
 `./installLatest.sh`
 
 to install the latest package versions into your sandbox org, where `sandbox` is the alias for your destination org.
 
-## Promote package versions
+## 6. Promote package versions
 
-### Promote SetupBase package version
+### 6a. Promote SetupBase package version
 
 Ideally you should promote package version to Managed Released version to be able to install them into production.
 
@@ -345,7 +354,7 @@ However, you might try to see how this works in action
 
 Also if you have time and inspiration you might add unit tests and promote this successfully
 
-### Promote SimpleDataTable package version
+### 6b. Promote SimpleDataTable package version
 
 Ideally you should promote package version to Managed Released version to be able to install them into production.
 
@@ -357,7 +366,7 @@ However, you might try to see how this works in action
 
 Also if you have time and inspiration you might add unit tests and promote this successfully
 
-### Promote DataTable package version
+### 6c. Promote DataTable package version
 
 Ideally you should promote package version to Managed Released version to be able to install them into production.
 
@@ -404,7 +413,7 @@ so the `Data Table` project definition will look like the following
         }
 ```
 
-### Install the promoted package version into the production
+### 6d. Install the promoted package version into the production
 
 If you have added unit tests to promote the package versions, you can now install the application to production.
 
@@ -418,7 +427,7 @@ to install the latest package versions into your production org, where `producti
 
 You might consider using `DH` or `namespaced_org` as your `production` environment.
 
-## Useful shortcut commands: rebuildAll and promoteAll
+### 6e. Useful shortcut commands: rebuildAll and promoteAll
 
 You can make use of `rebuildAll` shortcut command 
 
