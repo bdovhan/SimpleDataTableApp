@@ -5,7 +5,7 @@ Git, SFDX CLI tools and at least one Dev Hub org and at least one Org with regis
 Tools needed:
  - Git (Git Bash for Windows is required for Windows users)
  - SFDX CLI
- - IDE (like Visual Studio Code)
+ - IDE (like Visual Studio Code) which supports SFDX project code format
 
 GitHub user needed:
  - Register a GitHub user if you don't have one
@@ -44,6 +44,12 @@ Copy the SSH key to your clipboard. Based on your OS version, you might use eith
 
 Go to [Github: Add New SSH Key](https://github.com/settings/ssh/new)
 and paste the key from clipboard there and save
+
+### 1e. Install VS Code
+
+If your IDE doesn't support SFDX Project format, it is a good idea to install VS Code.
+
+Follow [this link](https://code.visualstudio.com/download) to download VS Code for your OS
 
 ## 2. Prerequisites: Setup DevHub org
 

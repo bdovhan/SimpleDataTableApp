@@ -30,11 +30,16 @@ All the packages will share the same registered namespace.
 
 Fork repository https://github.com/bdovhan/SimpleDataTableApp/tree/master/SimpleDataTable
 
+### 1a. Clone the repository
 Use `git clone` command to clone it to your local folder
+
+### 1b. Open Visual Studio Code
+
+Open Visual Studio Code or your preferred IDE (which supports SFDX code format) and open the `SimpleDataTable` subfolder
 
 ## 2. Split the project into three pieces
 
-Open `SimpleDataTable` subfolder in VSCode
+Once having opened `SimpleDataTable` subfolder in VSCode or other IDE, you may start splitting the project.
 
 Split the project into three subprojects: baseSetup, simpleDataTable and dataTable
 
