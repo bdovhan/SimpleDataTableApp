@@ -227,7 +227,7 @@ Now go to file `baseSetup/classes/SchemaProvider` and add
 
 `@namespaceAccessible`
 
-annotation to the method getFieldMap.
+annotation to the methods `getFieldMap` and `prefixFields`.
 
 Now rerun package version creation script for the Base Setup and then rerun package version create script for the Simple Data Table
 

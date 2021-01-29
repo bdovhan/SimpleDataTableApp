@@ -5,7 +5,6 @@ public class SchemaProvider {
         return dfr.getName().remove(dfr.getLocalName());
     }
     
-    @namespaceAccessible
     public static List<String> prefixFields(List<String> fields) {
         List<String> namespacedFields = new List<String>();
         String namespacePrefix = getNamespace();
